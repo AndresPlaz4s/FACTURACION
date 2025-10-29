@@ -1,0 +1,57 @@
+<header class="navbar">
+    <div class="menu-icon">☰</div>
+    <div class="divider"></div>
+    <div class="ventas">VENTAS</div>
+    <div class="usuario">FarmaVISION</div>
+</header>
+
+<!-- Contenedor principal -->
+<main class="contenedor">
+    <h1>Agregar productos a la venta</h1>
+
+    <!-- Buscador -->
+    <div class="buscador-container">
+        <input type="text" id="buscar" placeholder="Buscar producto...">
+        <button id="btnBuscar"></button>
+        <button id="lupa">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+    </div>
+
+    <br>
+
+    <!-- Formulario para agregar productos -->
+    <div class="formulario">
+        <input type="text" id="producto" placeholder="Producto">
+        <input type="text" id="categoria" placeholder="Categoría">
+        <input type="number" id="precio" placeholder="Precio">
+        <input type="number" id="cantidad" placeholder="Cantidad">
+    </div>
+
+    <!-- Tabla de productos -->
+    <table id="tablaProductos">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ibuprofeno</td>
+                <td>Analgésico</td>
+                <td>$5.00</td>
+                <td>1</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Botones -->
+    <div class="botones">
+        <button class="cancelar" id="btnCancelar">CANCELAR</button>
+        <button class="agregar" id="btnAgregar">AGREGAR</button>
+    </div>
+</main>

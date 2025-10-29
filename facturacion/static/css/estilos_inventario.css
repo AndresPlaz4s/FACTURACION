@@ -1,0 +1,82 @@
+body {
+    font-family: "DM Sans", sans-serif;
+    background-color: #f5f8f6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin:60 ;
+    padding:2rem;
+    justify-content:center;
+}
+
+.container{
+    border-radius: 2rem;
+    border:5px solid #550e6b;
+}
+
+.filtrar{
+    display:flex;
+    justify-content:center;
+    border-radius:5px;
+    border:2px solid rgb(63, 5, 65);
+    width:250px;
+}
+
+input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #6b008b;
+    font-size:15px;
+    color: white;
+    border: none;
+    padding:12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+
+table {
+    background: #ffffff;
+    border: 2px solid #6b008b;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.contenedor{
+    background: #fcf0ff;
+    color: rgb(26, 25, 25);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 0 0 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th, td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+thead th {
+    background: #550e6b;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f2f2f2;
+}

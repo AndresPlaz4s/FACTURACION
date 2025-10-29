@@ -1,0 +1,191 @@
+/* ======= Barra superior ======= */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #58079c;
+    color: white;
+    padding: 10px 30px;
+}
+
+.menu-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.divider {
+    width: 1px;
+    height: 25px;
+    background-color: #58079c;
+    margin: 0 10px;
+}
+
+.ventas {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.usuario {
+    margin-left: auto;
+    font-size: 14px;
+}
+
+/* ======= Contenido ======= */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+}
+
+.contenedor {
+    background-color: white;
+    border: 2px solid #640ba7;
+    border-radius: 12px;
+    padding: 25px;
+    width: 80%;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+h1 {
+    color: #640ba7;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+/* ----- Buscador ----- */
+.buscador-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #58079c;
+    border-radius: 8px 8px 0 0;
+    padding: 5px;
+}
+
+.buscador-container input {
+    width: 90%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.buscador-container button {
+    background-color: #640ba7;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Estilo para el botón de lupa */
+
+.lupa button {
+    position: absolute;
+    background: url("icono lupa.png") no-repeat right center;
+    background-size: 10px 10px;
+    width: 40px;
+    height: 60px;
+    border: 20px solid black;
+    cursor: pointer;
+}
+
+
+
+
+/* ======= Formulario ======= */
+.formulario {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.formulario input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ======= Tabla ======= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+thead {
+    background-color: #640ba7;
+    color: white;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+/* ======= Botones ======= */
+.botones {
+    text-align: center;
+}
+
+button {
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cancelar {
+    background-color: red;
+    color: white;
+    margin-right: 10px;
+}
+
+.agregar {
+    background-color: green;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .contenedor {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .formulario {
+        flex-direction: column;
+    }
+
+    .formulario {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 400px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .usuario {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 350px) {
+    .buscador-container input {
+        width: 80%;
+    }
+}
+
+@media (max-width: 300px) {
+    .buscador-container button {
+        font-size: 16px;
+    }
+}

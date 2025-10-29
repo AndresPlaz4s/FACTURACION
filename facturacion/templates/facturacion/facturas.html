@@ -1,0 +1,65 @@
+<button id="button-menu" class="button-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<!-- ======= CONTENIDO PRINCIPAL ======= -->
+<main class="contenedor-principal">
+
+    <!-- 🔍 CUADRO DE BÚSQUEDA POR FECHA -->
+    <section class="buscador-fecha">
+        <h3>Filtrar Facturas por Fecha</h3>
+        <div class="filtro">
+            <label for="fecha">Seleccione una fecha:</label>
+            <input type="date" id="fecha" name="fecha">
+            <button class="btn-buscar">Buscar</button>
+        </div>
+    </section>
+
+    <!-- 🧾 CUADRO DE FACTURAS -->
+    <section class="cuadro-facturas">
+        <div class="contenedor-tabla">
+            <h2>FACTURAS</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>N°.F</th>
+                        <th>Factura</th>
+                        <th>Mostrar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><span class="fecha">11 Apr 2030</span></td>
+                        <td><i class="icono-imprimir">🖨️</i></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><span class="fecha">18 Apr 2030</span><br>URA</td>
+                        <td><i class="icono-imprimir">🖨️</i></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><span class="fecha">25 Apr 2030</span></td>
+                        <td><i class="icono-imprimir">🖨️</i></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><span class="fecha">02 May 2030</span></td>
+                        <td><i class="icono-imprimir">🖨️</i></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><span class="fecha">09 May 2030</span></td>
+                        <td><i class="icono-imprimir">🖨️</i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<!-- Script del menú -->
+<script src="scrit.js"></script>
