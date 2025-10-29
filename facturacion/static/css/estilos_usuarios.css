@@ -8,12 +8,9 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
-    background: url(imagenes/image.png) no-repeat center center fixed;
+    
     background-size: cover;
 }
-
-
-
 
 .añadir {
     text-align: center;
@@ -75,7 +72,6 @@ body {
     padding: 0 5px;
 }
 
-/* Efecto flotante en labels */
 .username input:focus~label,
 .username input:valid~label,
 .username select:focus~label,
@@ -96,15 +92,12 @@ body {
     color: #333;
 }
 
-
-
 .recordar {
     margin: -5px 0 20px 5px;
     color: black;
     text-align: center;
     cursor: pointer;
 }
-
 
 input[type="submit"] {
     width: 100%;
@@ -123,7 +116,6 @@ input[type="submit"]:hover {
     background: #4d0491;
 }
 
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -137,7 +129,7 @@ body {
     background-color: #f7f7f7;
 }
 
-
+/* ---- Barra lateral ---- */
 .sidebar {
     width: 70px;
     background-color: #5b2ea6;
@@ -161,14 +153,14 @@ body {
     color: #cfc3f0;
 }
 
-
+/* ---- Contenido principal ---- */
 .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-
+/* ---- Barra superior ---- */
 .topbar {
     background-color: white;
     display: flex;
