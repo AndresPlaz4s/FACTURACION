@@ -11,6 +11,7 @@ body {
     margin:60 ;
     padding:2rem;
     justify-content:center;
+    background:#f6d7ff;
 }
 
 .container{
@@ -21,10 +22,17 @@ body {
 .filtrar{
     display:flex;
     justify-content:center;
-    border-radius:5px;
+    border-radius:1px;
     border:2px solid rgb(63, 5, 65);
-    width:250px;
+    width:220px;
+    padding:12px;
+    background: #550e6b;
+    color:white;
+    font-size: 15px;
+    margin-bottom:10px;
 }
+
+
 
 input[type="date"] {
     padding: 6px 10px;
