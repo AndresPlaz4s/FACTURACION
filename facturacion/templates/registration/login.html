@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>inicio de secion requerido</p>
+    <form method="post">
+        {% csrf_token %}
+        <label for="usuario">
+            <input type="text" name="username" id="usuario" placeholder="Usuario">
+        </label>
+        <label for="pass">
+            <input type="password" name="password" placeholder="Contraseña">
+        </label>
+        <button type="submit">Iniciar secion</button>
+    </form>
+</body>
+</html>
