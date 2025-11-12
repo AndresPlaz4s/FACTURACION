@@ -9,3 +9,10 @@ env/
 ENV/
 .venv/
 .virtualenv/
+db.sqlite3
+__pycache__/
+*.pyc
+*.log
+/venv/
+media/
+.env
