@@ -95,12 +95,10 @@ class Venta(models.Model):
         return f"Venta #{self.pk or '-'}: {self.producto.nombre} x{self.cantidad} = {self.total}"
 
     def save(self, *args, **kwargs):
-        # Calcular total automáticamente si no se proporciona o si hay discrepancia
         try:
             calc_total = (self.p_unitario or 0) * (self.cantidad or 0)
         except Exception:
             calc_total = self.total or 0
-        # Si total es cero o distinto del calculado, actualizarlo
         if not self.total or float(self.total) != float(calc_total):
             self.total = calc_total
         super().save(*args, **kwargs)
