@@ -1,13 +1,11 @@
-<button id="button-menu" class="button-menu">
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
+{% extends 'facturacion/base.html' %} {% load static %}
 
-<!-- ======= CONTENIDO PRINCIPAL ======= -->
+{% block title %}Facturas{% endblock %}
+
+{% block content %}
+
 <main class="contenedor-principal">
 
-    <!-- 🔍 CUADRO DE BÚSQUEDA POR FECHA -->
     <section class="buscador-fecha">
         <h3>Filtrar Facturas por Fecha</h3>
         <div class="filtro">
@@ -20,7 +18,7 @@
     <!-- 🧾 CUADRO DE FACTURAS -->
     <section class="cuadro-facturas">
         <div class="contenedor-tabla">
-            <h2>FACTURAS</h2>
+            <h1>FACTURAS</h1>
             <table>
                 <thead>
                     <tr>
@@ -33,27 +31,27 @@
                     <tr>
                         <td>1</td>
                         <td><span class="fecha">11 Apr 2030</span></td>
-                        <td><i class="icono-imprimir">🖨️</i></td>
+                        <td><button><i class="fa-solid fa-print"></i></button></td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td><span class="fecha">18 Apr 2030</span><br>URA</td>
-                        <td><i class="icono-imprimir">🖨️</i></td>
+                        <td><span class="fecha">18 Apr 2030</span></td>
+                        <td><button><i class="fa-solid fa-print"></i></button></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td><span class="fecha">25 Apr 2030</span></td>
-                        <td><i class="icono-imprimir">🖨️</i></td>
+                        <td><button><i class="fa-solid fa-print"></i></button></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td><span class="fecha">02 May 2030</span></td>
-                        <td><i class="icono-imprimir">🖨️</i></td>
+                        <td><button><i class="fa-solid fa-print"></i></button></td>
                     </tr>
                     <tr>
                         <td>5</td>
                         <td><span class="fecha">09 May 2030</span></td>
-                        <td><i class="icono-imprimir">🖨️</i></td>
+                        <td><button><i class="fa-solid fa-print"></i></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -61,5 +59,4 @@
     </section>
 </main>
 
-<!-- Script del menú -->
-<script src="scrit.js"></script>
+{% endblock %}

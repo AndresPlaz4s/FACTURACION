@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = '/ventas/'
+LOGIN_REDIRECT_URL = '/home/'
 
 LOGOUT_REDIRECT_URL = '/'
 
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'facturacion' / 'templates'],
+        'DIRS': [BASE_DIR / 'facturacion' / 'templates'],  
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,46 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const links = document.querySelectorAll('.topbar .left a, .sidebar a');
-    const contentDiv = document.getElementById('content');
+const buscarBtn = document.getElementById("btnBuscar");
+const buscarInput = document.getElementById("buscarProducto");
+const listaResultados = document.getElementById("listaResultados");
+const tabla = document.querySelector("#tablaProductos tbody");
+const cancelarBtn = document.getElementById("btnCancelar");
 
-    function setActive(page) {
-        links.forEach(l => {
-            if (l.getAttribute('data-page') === page) {
-                l.classList.add('active');
-            } else {
-                l.classList.remove('active');
-            }
-        });
-    }
+buscarBtn.addEventListener("click", () => {
+    const texto = buscarInput.value.trim();
+    listaResultados.innerHTML = "";
 
-    function loadPage(url) {
-        fetch(url, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Error al cargar la página");
-            return response.text();
-        })
-        .then(html => {
-            contentDiv.innerHTML = html;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            contentDiv.innerHTML = "<p>Error al cargar contenido.</p>";
-        });
-    }
+    if (texto === "") return;
 
-    // Evento al hacer clic
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.getAttribute('data-page');
-            setActive(page);
-            loadPage(page);
-        });
-    });
+    const li = document.createElement("li");
+    li.textContent = texto;
+    li.addEventListener("click", () => agregarProducto(texto));
+    listaResultados.appendChild(li);
+});
 
-    // 🚀 CARGAR AUTOMÁTICAMENTE "VENTAS" AL INICIO
-    const defaultPage = links[0].getAttribute('data-page'); // la primera (ventas)
-    setActive(defaultPage);
-    loadPage(defaultPage);
+function agregarProducto(nombre) {
+    const fila = document.createElement("tr");
+    const num = tabla.rows.length + 1;
+    fila.innerHTML = `
+        <td>${num}</td>
+        <td>${nombre}</td>
+        <td><input type="number" min="1" value="1" style="width:70px; text-align:center;"></td>
+        <td><input type="number" min="0" step="0.01" value="0.00" style="width:90px; text-align:center;"></td>
+        <td><button onclick="eliminarFila(this)">Eliminar</button></td>
+    `;
+    tabla.appendChild(fila);
+    listaResultados.innerHTML = "";
+    buscarInput.value = "";
+}
+
+function eliminarFila(btn) {
+    btn.parentElement.parentElement.remove();
+}
+
+cancelarBtn.addEventListener("click", () => {
+    tabla.innerHTML = "";
+    buscarInput.value = "";
+    listaResultados.innerHTML = "";
 });

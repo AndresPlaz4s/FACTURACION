@@ -1,65 +1,50 @@
-<div class="filtrar">
-    <label for="filtrar">Filtrar</label>
-        <select name="filtrar" id="filtrar">
-        <option value="filtrar">mayor cantidad</option>
-        <option value="filtrar">mas antiguo</option>
-        <option value="filtrar">mas reciente</option>
-        <option value="filtrar">menor cantidad</option>
-        </select>
-        </div>
+{% extends 'facturacion/base.html' %}
+{% load static %}
 
-    <section class="container">
-        <button>Nuevo➕</button>
-        <table>
+{% block title %}Inventario{% endblock %}
+
+{% block content %}
+
+<div class="caja-inventario">
+    <!-- 🔹 Barra de filtrado -->
+    <div class="filtro-bar">
+        <label for="filtrar">Filtrar por:</label>
+        <select id="filtrar">
+            <option value="mayor">Mayor cantidad</option>
+            <option value="antiguo">Más antiguo</option>
+            <option value="reciente">Más reciente</option>
+            <option value="menor">Menor cantidad</option>
+        </select>
+        <button class="btn-nuevo">Nuevo ➕</button>
+    </div>
+
+    <!-- 🔹 Tabla de inventario -->
+    <section class="tabla-contenedor">
+        <h1>Inventario de Productos</h1>
+        <table class="tabla-inventario">
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Cantidad</th>
-                    <th>precio</th>
-                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Producto01</td>
+                    <td>Producto 01</td>
                     <td>2</td>
-                    <td>$</td>
-                    <td>util</td>
+                    <td>$10.000</td>
+                    <td>Útil para el dolor de cabeza</td>
                     <td>
-                        <label for="opciones"></label>
-                        <select name="opciones" id="opciones">
-                            <option value="opciones">editar✏️</option>
-                            <option value="opciones">eliminar🗑️</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Producto02</td>
-                    <td>2</td>
-                    <td>$</td>
-                    <td>util</td>
-                    <td>
-                        <label for="opciones"></label>
-                        <select name="opciones" id="opciones">
-                            <option value="opciones">editar✏️</option>
-                            <option value="opciones">eliminar🗑️</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Producto03</td>
-                    <td>2</td>
-                    <td>$</td>
-                    <td>util</td>
-                    <td>
-                        <label for="opciones"></label>
-                        <select name="opciones" id="opciones">
-                            <option value="opciones">editar✏️</option>
-                            <option value="opciones">eliminar🗑️</option>
-                        </select>
+                        <button class="btn btn-editar">Editar</button>
+                        <button class="btn btn-eliminar">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </section>
+</div>
+
+{% endblock %}
