@@ -61,6 +61,7 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
     descripcion = models.TextField(blank=True, null=True)
+    tipo = models.TextChoices(max_length=200)
     f_entrada = models.DateField(auto_now_add=True)
     f_vencimiento = models.DateField(blank=True, null=True)
     
@@ -96,15 +97,5 @@ class Venta(models.Model):
         return f"Venta #{self.pk or '-'}: {self.producto.nombre} x{self.cantidad} = {self.total}"
     
     def save(self, *args, **kwargs):
-<<<<<<< HEAD
-        try:
-            calc_total = (self.p_unitario or 0) * (self.cantidad or 0)
-        except Exception:
-            calc_total = self.total or 0
-        if not self.total or float(self.total) != float(calc_total):
-            self.total = calc_total
-        super().save(*args, **kwargs)
-=======
         self.total = self.p_unitario * self.cantidad
         super().save(*args, **kwargs)
->>>>>>> e624df3
