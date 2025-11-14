@@ -1,65 +1,45 @@
-<div class="filtrar">
-    <label for="filtrar">Filtrar</label>
-        <select name="filtrar" id="filtrar">
-        <option value="filtrar">mayor cantidad</option>
-        <option value="filtrar">mas antiguo</option>
-        <option value="filtrar">mas reciente</option>
-        <option value="filtrar">menor cantidad</option>
-        </select>
-        </div>
+{% extends 'facturacion/base.html' %}
+{% load static %}
 
-    <section class="container">
-        <button>Nuevo➕</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>precio</th>
-                    <th>Descripcion</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Producto01</td>
-                    <td>2</td>
-                    <td>$</td>
-                    <td>util</td>
-                    <td>
-                        <label for="opciones"></label>
-                        <select name="opciones" id="opciones">
-                            <option value="opciones">editar✏️</option>
-                            <option value="opciones">eliminar🗑️</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Producto02</td>
-                    <td>2</td>
-                    <td>$</td>
-                    <td>util</td>
-                    <td>
-                        <label for="opciones"></label>
-                        <select name="opciones" id="opciones">
-                            <option value="opciones">editar✏️</option>
-                            <option value="opciones">eliminar🗑️</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Producto03</td>
-                    <td>2</td>
-                    <td>$</td>
-                    <td>util</td>
-                    <td>
-                        <label for="opciones"></label>
-                        <select name="opciones" id="opciones">
-                            <option value="opciones">editar✏️</option>
-                            <option value="opciones">eliminar🗑️</option>
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+{% block title %}Inventario{% endblock %}
+
+{% block content %}
+<h1>Inventario de Productos</h1>
+<a href="{% url 'facturacion:crear_producto' %}" class="">Nuevo</a>
+
+{% if producto %}
+    <table class="tabla-inventario">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Fecha vencimiento</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for it in producto %}
+            <tr>
+                <td>{{ it.nombre }}</td>
+                <td>{{ it.stock }}</td>
+                <td>${{ it.precio }}</td>
+                <td>{{ it.f_vencimiento }}</td>
+                <td>
+                    <a href="{% url 'facturacion:editar_producto' it.pk %}">Editar</a>
+
+                    <a href="{% url 'facturacion:eliminar_producto' it.pk %}">eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay productos en el inventario</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Esta tabla no tiene productos.</p>
+{% endif %}
+
+{% endblock %}

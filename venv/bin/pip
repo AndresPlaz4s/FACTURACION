@@ -1,4 +1,4 @@
-#!/home/andres_plazas/Sistema-De-Facturacion/venv/bin/python3
+#!/home/andres/FACTURACION/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

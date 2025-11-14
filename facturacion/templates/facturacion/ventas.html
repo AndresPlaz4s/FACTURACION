@@ -1,43 +1,52 @@
-<!-- Contenedor principal -->
-<main class="contenedor">
-    <h1>Agregar productos a la venta</h1>
+{% extends 'facturacion/base.html' %}
+{% load static %}
 
-    <!-- Buscador -->
-    <div class="buscador-container">
-        <input type="text" id="buscar" placeholder="Buscar producto...">
-        <button id="btnBuscar"></button>
-        <button id="lupa">
+{% block title %}Ventas{% endblock %}
+
+{% block content %}
+
+<div class="caja-ventas">
+    <h1 style="text-align:center;">Tabla de Productos</h1>
+
+    <!-- 🔍 Buscador -->
+    <div class="buscador">
+        <input type="text" id="buscarProducto" placeholder="Buscar producto..." />
+        <button id="btnBuscar" onclick="buscarProducto()">
             <i class="fa-solid fa-magnifying-glass"></i>
         </button>
-
     </div>
 
-    <br>
-    <!-- Tabla de productos -->
-    <table id="tablaProductos">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Ibuprofeno</td>
-          <td>Analgésico</td>
-          <td>$5.00</td>
-          <td>1</td>
-        </tr>
-      </tbody>
+
+    <!-- 🔎 Resultados -->
+    <div id="listaResultados" class="lista-resultados" style="display: none;">
+        <h3>Resultados de la búsqueda:</h3>
+        <ul id="resultadosBusqueda"></ul>
+        <button>Agregar</button>
+    </div>
+
+    <!-- 📋 Tabla -->
+    <table id="tablaNotas">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody id="grupoinputs">
+            <tr>
+
+            </tr>
+        </tbody>
     </table>
 
-    <!-- Botones -->
-    <div class="botones">
-      <button class="cancelar" id="btnCancelar">CANCELAR</button>
-      <button class="agregar" id="btnAgregar">AGREGAR</button>
+    <div class="botoncaja">
+        <button class="btn btn-cancelar">Cancelar</button>
+        <button class="btn btn-confirmar">Confirmar</button>
     </div>
-  </main>
-</body>
-</html>
+</div>
+
+
+{% endblock %}

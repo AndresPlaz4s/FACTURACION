@@ -1,31 +1,37 @@
-{% extends 'base.html' %}
 {% load static %}
 
-{% block title %} SISTEMA DE FACTURACION {% endblock %}
-{% block content %}
+<nav class="sidebar">
+    <a href="{% url 'facturacion:home' %}">
+        <i class="fa-solid fa-staff-snake"></i>
+        <span>FarmaVision</span>
+    </a>
 
-<div class="sidebar">
-    <a href="#" data-page="{% url 'facturacion:ventas' %}" class="active"><i class="fa-solid fa-cart-shopping"></i></a>
-    <a href="#" data-page="{% url 'facturacion:inventario' %}"><i class="fa-solid fa-boxes-stacked"></i></a>
-    <a href="#" data-page="{% url 'facturacion:facturas' %}"><i class="fa-solid fa-file-invoice-dollar"></i></a>
-    <a href="#" data-page="{% url 'facturacion:usuarios' %}"><i class="fa-solid fa-user"></i></a>
-</div>
+    <a href="{% url 'facturacion:ventas' %}">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Ventas</span>
+    </a>
 
-<div class="main">
-    <div class="topbar">
-        <div class="left">
-            <a href="#" data-page="{% url 'facturacion:ventas' %}" class="active">Ventas</a>
-            <a href="#" data-page="{% url 'facturacion:inventario' %}">Inventario</a>
-            <a href="#" data-page="{% url 'facturacion:facturas' %}">Facturas</a>
-            <a href="#" data-page="{% url 'facturacion:usuarios' %}">Usuarios</a>
+    <a href="{% url 'facturacion:inventario' %}">
+        <i class="fa-solid fa-box"></i>
+        <span>Inventario</span>
+    </a>
+
+    <a href="{% url 'facturacion:facturas' %}">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+        <span>Facturas</span>
+    </a>
+
+    <a href="{% url 'facturacion:usuarios' %}">
+        <i class="fa-solid fa-users"></i>
+        <span>Usuarios</span>
+    </a>
+
+    <!-- Usuario -->
+    <div class="user-info">
+        <img src="{% static 'images/usuario.jpeg' %}" alt="Usuario">
+        <div class="user-text">
+            <strong>Andrés Plazas</strong>
+            <span>Administrador</span>
         </div>
-        <div class="right">FarmaVision</div>
     </div>
-
-    <div id="content">
-    </div>
-</div>
-
-<script src="{% static 'js/javascrip.js' %}"></script>
-
-{% endblock %}
+</nav>
