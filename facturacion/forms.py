@@ -5,7 +5,7 @@ from .models import Producto
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ["nombre", "precio", "stock", "descripcion", "f_vencimiento" ]
+        fields = ["nombre", "precio", "stock", "tipo", "descripcion", "f_vencimiento" ]
         widgets = {
             "nombre": forms.TextInput( attrs={
                 "placeholder": "nombre del Producto",

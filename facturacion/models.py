@@ -57,11 +57,15 @@ class Proveedor(models.Model):
         return f"{self.n_empresa} ({self.nit})"
 
 class Producto(models.Model):
+    TIPO_PRODUCTO = [
+        ("CAJA", "Caja"),
+        ("UNIDAD", "Unidad"),
+    ]
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
     descripcion = models.TextField(blank=True, null=True)
-    tipo = models.TextChoices(max_length=200)
+    tipo = models.CharField(max_length=10, choices=TIPO_PRODUCTO, default="CREADO")
     f_entrada = models.DateField(auto_now_add=True)
     f_vencimiento = models.DateField(blank=True, null=True)
     
