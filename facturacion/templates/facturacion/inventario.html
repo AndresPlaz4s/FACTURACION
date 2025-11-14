@@ -4,47 +4,42 @@
 {% block title %}Inventario{% endblock %}
 
 {% block content %}
+<h1>Inventario de Productos</h1>
+<a href="{% url 'facturacion:crear_producto' %}" class="">Nuevo</a>
 
-<div class="caja-inventario">
-    <!-- 🔹 Barra de filtrado -->
-    <div class="filtro-bar">
-        <label for="filtrar">Filtrar por:</label>
-        <select id="filtrar">
-            <option value="mayor">Mayor cantidad</option>
-            <option value="antiguo">Más antiguo</option>
-            <option value="reciente">Más reciente</option>
-            <option value="menor">Menor cantidad</option>
-        </select>
-        <button class="btn-nuevo">Nuevo ➕</button>
-    </div>
+{% if producto %}
+    <table class="tabla-inventario">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Fecha vencimiento</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for it in producto %}
+            <tr>
+                <td>{{ it.nombre }}</td>
+                <td>{{ it.stock }}</td>
+                <td>${{ it.precio }}</td>
+                <td>{{ it.f_vencimiento }}</td>
+                <td>
+                    <a href="{% url 'facturacion:editar_producto' it.pk %}">Editar</a>
 
-    <!-- 🔹 Tabla de inventario -->
-    <section class="tabla-contenedor">
-        <h1>Inventario de Productos</h1>
-        <table class="tabla-inventario">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Descripción</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Producto 01</td>
-                    <td>2</td>
-                    <td>$10.000</td>
-                    <td>Útil para el dolor de cabeza</td>
-                    <td>
-                        <button class="btn btn-editar">Editar</button>
-                        <button class="btn btn-eliminar">Eliminar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-</div>
+                    <a href="{% url 'facturacion:eliminar_producto' it.pk %}">eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay productos en el inventario</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Esta tabla no tiene productos.</p>
+{% endif %}
 
 {% endblock %}
