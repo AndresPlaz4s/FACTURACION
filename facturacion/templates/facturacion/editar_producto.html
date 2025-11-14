@@ -3,14 +3,24 @@
 
 {% block content %}
 
-<h1>Editar producto</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn">Actualizar</button>
-</form>
+<div class="caja-formulario">
+    <h1>Editar producto</h1>
 
-<p>
-    <a href="{% url 'facturacion:inventario' %}">Volver al inventario</a>
-</p>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-campos">
+            {{ form.as_p }}
+        </div>
+
+        <div class="btn btn-left" style="margin-top: 20px;">
+            <button type="submit" class="btn-confirmar">Actualizar</button>
+        </div>
+    </form>
+
+    <div class="volver-inventario">
+        <a href="{% url 'facturacion:inventario' %}">← Volver al inventario</a>
+    </div>
+</div>
+
 {% endblock %}

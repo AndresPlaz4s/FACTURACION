@@ -4,11 +4,16 @@
 {% block title %}Inventario{% endblock %}
 
 {% block content %}
-<h1>Inventario de Productos</h1>
-<a href="{% url 'facturacion:crear_producto' %}" class="">Nuevo</a>
 
-{% if producto %}
-    <table class="tabla-inventario">
+<div class="caja-ventas">
+    <h1>Inventario de Productos</h1>
+
+    <div class="btn btn-left" style="margin-bottom: 20px;">
+        <a href="{% url 'facturacion:crear_producto' %}" class="btn-confirmar">Nuevo</a>
+    </div>
+
+    {% if producto %}
+    <table class="tabla-inventario" id="tablaNotas">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -18,6 +23,7 @@
                 <th>Opciones</th>
             </tr>
         </thead>
+
         <tbody>
             {% for it in producto %}
             <tr>
@@ -25,10 +31,10 @@
                 <td>{{ it.stock }}</td>
                 <td>${{ it.precio }}</td>
                 <td>{{ it.f_vencimiento }}</td>
-                <td>
-                    <a href="{% url 'facturacion:editar_producto' it.pk %}">Editar</a>
 
-                    <a href="{% url 'facturacion:eliminar_producto' it.pk %}">eliminar</a>
+                <td class="opciones">
+                    <a href="{% url 'facturacion:editar_producto' it.pk %}" class="btn-editar">Editar</a>
+                    <a href="{% url 'facturacion:eliminar_producto' it.pk %}" class="btn-eliminar">Eliminar</a>
                 </td>
             </tr>
             {% empty %}
@@ -38,8 +44,10 @@
             {% endfor %}
         </tbody>
     </table>
-{% else %}
-    <p>Esta tabla no tiene productos.</p>
-{% endif %}
+
+    {% else %}
+    <p>No hay productos en esta tabla.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

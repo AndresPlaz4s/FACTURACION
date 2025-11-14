@@ -19,14 +19,8 @@ body {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== SIDEBAR ===== */
@@ -51,10 +45,10 @@ body {
 
 /* Sidebar expandido */
 .sidebar:hover {
-    width: 240px;
+    width: 330px;
 }
 
-/* Enlaces */
+/* Enlaces del sidebar */
 .sidebar a {
     display: flex;
     align-items: center;
@@ -72,15 +66,10 @@ body {
     white-space: nowrap;
 }
 
-/* Primer enlace (FarmaVision) igual que los demás */
+/* Primer enlace (FarmaVision) */
 .sidebar a:first-child {
     background: rgba(255, 255, 255, 0.08);
     font-weight: 700;
-}
-
-.sidebar:hover a:first-child span {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 /* Iconos */
@@ -90,14 +79,14 @@ body {
     text-align: center;
 }
 
-/* Texto de enlaces */
+/* Texto oculto */
 .sidebar a span {
     opacity: 0;
     transform: translateX(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Mostrar texto al expandirse */
+/* Mostrar texto al expandir */
 .sidebar:hover a span {
     opacity: 1;
     transform: translateX(0);
@@ -109,19 +98,10 @@ body {
     transform: translateX(6px);
 }
 
-.sidebar a:active {
-    transform: translateX(0);
-}
-
 /* ===== CONTENIDO ===== */
 main.container {
     margin-left: 100px;
     padding: 24px;
-    transition: margin-left 0.4s ease;
-}
-
-.sidebar:hover ~ main.container {
-    margin-left: 260px;
 }
 
 h1 {
@@ -161,37 +141,36 @@ button {
 }
 
 .btn {
-    display: inline-block;
-    padding: 8px 16px;
-    margin: 5px 0;
-    border-radius: 9999px;
-    font-weight: 600;
-    color: #fff;
-    border: none;
-    transition: background 0.3s, transform 0.2s;
-    background-color: var(--primary-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;              
+    margin-top: 25px;
+    width: 100%;
 }
 
-.btn:hover {
+.btn button {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 10px 22px;     
+    border-radius: 20px;   
+    cursor: pointer;
+    font-size: 1rem;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn button:hover {
+    background: var(--third-color);
     transform: translateY(-2px);
 }
 
-.btn:active {
-    transform: translateY(0);
+.btn .btn-limpiar {
+    background: #d9534f !important;
 }
 
-.btn-eliminar { background-color: #e84d13; }
-.btn-eliminar:hover { background-color: #c63c0f; }
-
-.btn-editar, .btn-agregar { background-color: #0b8f00; }
-.btn-editar:hover, .btn-agregar:hover { background-color: #097a00; }
-
-.btn-cancelar {  background-color: var(--secondary-color) }
-.btn-cancelar:hover { background-color:var(--primary-color); }
-
-.btn-buscar { background-color: #b57edc; }
-.btn-buscar:hover { background-color: #a36ad4; }
-
+.btn .btn-limpiar:hover {
+    background: #c9302c !important;
+}
 /* ===== RESPONSIVE ===== */
 @media (max-width: 800px) {
     .sidebar {
@@ -202,9 +181,7 @@ button {
         justify-content: space-around;
     }
 
-    .sidebar .brand {
-        display: none;
-    }
+    .sidebar .brand { display: none; }
 
     main.container {
         margin-left: 0;
@@ -212,26 +189,24 @@ button {
     }
 }
 
-/* ===== USUARIO EN LA PARTE INFERIOR ===== */
+/* ===== USER INFO INFERIOR ===== */
 .user-info {
-    margin-top: auto; /* lo empuja hacia abajo */
+    margin-top: auto;
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 12px 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.25); /* rayita separadora arriba */
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-/* Imagen del usuario */
 .user-info img {
-    width: 54px;      /* tamaño un poco más grande */
+    width: 54px;
     height: 54px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.4); /* borde suave */
+    border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-/* Texto del usuario */
 .user-text {
     display: flex;
     flex-direction: column;
@@ -240,44 +215,48 @@ button {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Mostrar texto al expandir sidebar */
 .sidebar:hover .user-text {
     opacity: 1;
     transform: translateX(0);
 }
 
-/* Nombre */
 .user-text strong {
     font-size: 1rem;
     font-weight: 700;
     color: #fff;
 }
 
-/* Rol */
 .user-text span {
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* ===== CAJA VENTAS ===== */
 .caja-ventas {
     background: rgba(171, 73, 204, 0.08);
     backdrop-filter: blur(8px);
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(91, 46, 130, 0.25);
     padding: 40px;
-    max-width: 1100px;
+    max-width: 1600px;
     margin: 50px auto;
     transition: 0.4s ease;
 }
+.caja-ventas h3 {
+    margin-left: 11px !important; 
+}
 
-/* 🔍 Buscador */
+.lista-resultados button{
+    margin-left: 50px !important;
+}
+/* Buscador */
 .buscador {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px auto 30px;
     background: rgba(171, 73, 204, 0.1);
-    border-radius: 50px;
+    border-radius: 20px;
     padding: 8px 14px;
     width: 100%;
     box-shadow: 0 0 8px rgba(91, 46, 130, 0.15);
@@ -300,7 +279,6 @@ button {
 
 .buscador button {
     background: var(--primary-color);
-    border: none;
     color: #fff;
     padding: 10px 14px;
     border-radius: 50%;
@@ -314,18 +292,18 @@ button {
     transform: scale(1.1);
 }
 
-/* 📋 Tabla */
+/* Tabla Productos */
 #tablaNotas {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 20px;
     overflow: hidden;
 }
 
 #tablaNotas th, #tablaNotas td {
-    border: 1px solid rgba(171, 73, 204, 0.25);
+    border: none;
     text-align: center;
     padding: 12px;
 }
@@ -334,39 +312,199 @@ button {
     background: var(--secondary-color);
     color: #fff;
     font-weight: 600;
-    border: none;
 }
 
-/* ✅ Botón Cancelar */
-.botoncaja {
+
+/* ===== BOTONES DERECHA (AÑADIDO) ===== */
+.botones-derecha {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 12px;                
+    margin-top: 25px;
+    width: 100%;
+}
+
+.lista-resultados ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 👈 separa nombre/precio del botón */
+    padding: 10px 15px;
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* Nombre del producto */
+.lista-resultados .nombre-producto {
+    font-weight: 600;
+    color: #4a2568;
+}
+
+/* Precio */
+.lista-resultados .precio-producto {
+    margin-left: 15px;
+    color: #6b008b;
+    font-weight: bold;
+}
+
+/* Botón agregar alineado a la derecha */
+.lista-resultados .btn-agregar {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.lista-resultados .btn-agregar:hover {
+    background: var(--third-color);
+    transform: translateY(-2px);
+}
+
+/* ===== INVENTARIO - NUEVOS BOTONES ===== */
+.btn-confirmar {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.btn-confirmar:hover {
+    background: var(--third-color) !important;
+    transform: translateY(-2px);
+}
+
+/* Botón editar */
+.btn-editar {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    padding: 8px 14px;
+    border-radius: 14px;
+    text-decoration: none;
+    margin-right: 6px;
+    transition: 0.3s ease;
+}
+
+.btn-editar:hover {
+    background: var(--third-color) !important;
+    transform: translateY(-2px);
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+    background: #d9534f;
+    color: #fff !important;
+    padding: 8px 14px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background: #c9302c;
+    transform: translateY(-2px);
+}
+
+/* Centrar botones en la columna */
+.opciones {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    gap: 10px;
 }
 
-.cancelar {
-    background: linear-gradient(135deg, var(--secondary-color), var(--third-color));
+/* Mantener estilo de tabla como la vista de ventas */
+.tabla-inventario {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.tabla-inventario th {
+    background: var(--secondary-color);
     color: #fff;
-    border: none;
-    padding: 14px 40px;
-    border-radius: 50px;
-    cursor: pointer;
+    padding: 12px;
+}
+
+.tabla-inventario td {
+    padding: 12px;
+}
+
+.tabla-inventario tr:hover {
+    background: rgba(171, 73, 204, 0.1);
+}
+.btn-left {
+    justify-content: flex-start !important;  /* Lo manda a la izquierda */
+}
+
+/* ===== FORMULARIO CREAR/EDITAR PRODUCTO ===== */
+
+.caja-formulario {
+    background: rgba(171, 73, 204, 0.08);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 700px;
+    margin: 50px auto;
+    box-shadow: 0 0 20px rgba(91, 46, 130, 0.25);
+}
+
+.caja-formulario h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+/* Campos */
+.form-campos p {
+    margin-bottom: 18px;
+    font-weight: 600;
+    color: #4a2568;
+}
+
+.form-campos input,
+.form-campos select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #b97ad9;
     font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(171, 73, 204, 0.3);
-    transition: all 0.3s ease;
+    background: #fff;
+    transition: .3s;
 }
 
-.cancelar:hover {
-    background: linear-gradient(135deg, var(--third-color), var(--secondary-color));
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(171, 73, 204, 0.4);
+.form-campos input:focus,
+.form-campos select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 6px rgba(91, 46, 130, 0.4);
 }
 
-/* 🎬 Animación */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Botón alineado a la izquierda */
+.btn-left {
+    justify-content: flex-start !important;
 }
 
+/* Enlace volver */
+.volver-inventario {
+    margin-top: 25px;
+}
+
+.volver-inventario a {
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 0;
+    display: inline-block;
+    transition: .2s ease;
+}
+
+.volver-inventario a:hover {
+    color: var(--third-color);
+    transform: translateX(-4px);
+}
