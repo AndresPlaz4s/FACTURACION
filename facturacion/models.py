@@ -59,6 +59,7 @@ class Proveedor(models.Model):
 class Producto(models.Model):
     TIPO_PRODUCTO = [
         ("CAJA", "Caja"),
+        ("BL", "Bl"),
         ("UNIDAD", "Unidad"),
     ]
     nombre = models.CharField(max_length=100)
