@@ -40,3 +40,4 @@ cancelarBtn.addEventListener("click", () => {
     buscarInput.value = "";
     listaResultados.innerHTML = "";
 });
+

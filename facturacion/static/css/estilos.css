@@ -508,3 +508,27 @@ button {
     color: var(--third-color);
     transform: translateX(-4px);
 }
+
+/* ===== LOGO SUPERIOR DE LA BARRA ===== */
+.sidebar-logo {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0 10px;
+}
+
+.sidebar-logo img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;        /* Si lo quieres redondo */
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    opacity: 0.9;
+    transition: width .3s ease, height .3s ease, opacity .3s ease;
+}
+
+/* Cuando la barra se expanda */
+.sidebar:hover .sidebar-logo img {
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+}
