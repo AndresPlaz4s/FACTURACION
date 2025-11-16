@@ -16,6 +16,7 @@ class Cliente(models.Model):
     
     class Meta:
         db_table = 'cliente'
+        
     
     def __str__(self):
         return f"{self.nombre} ({self.n_documento})"

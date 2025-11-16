@@ -1,6 +1,9 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Producto
+from .models import Producto, Cliente
+
+
+"formulario para registrar productos"
 
 class ProductoForm(forms.ModelForm):
     class Meta:
@@ -32,3 +35,23 @@ class ProductoForm(forms.ModelForm):
         if precio is not None and precio <= 0:
             raise forms.ValidationError("El precio tiene que ser mayor a 0")
         return precio
+
+"formulario para registrar cliente"
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields =["nombre","email","n_documento"]
+        widgets = {
+                "nombre": forms.TextInput( attrs={
+                    "placeholder": "ingrese el nombre",
+                }),
+                "email": forms.EmailInput(attrs={
+                    "placeholder":"ingrese su email",
+                }),
+                "n_documento":forms.NumberInput(attrs={
+                    "step": 1,
+                    "min": 0,
+                })
+    }
+    

@@ -16,5 +16,8 @@ urlpatterns = [
     path('facturas/', views.facturas, name='facturas'),
 
     path('usuarios/', views.usuarios, name='usuarios'),
-
+    
+     #clientes
+    path('cliente/', views.cliente, name='cliente'),
+    path('cliente/crear_cliente', views.crear_cliente, name='crear_cliente'),
 ]
