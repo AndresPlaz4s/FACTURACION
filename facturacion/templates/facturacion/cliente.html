@@ -26,8 +26,8 @@
                 <td>{{ cli.email }}</td>
                 <td>{{ cli.n_documento }}</td>
                 <td>
-                    <a href="#">editar</a>
-                    <a href="#">elimina</a>
+                    <a href="{% url 'facturacion:editar_cliente' cli.pk %}">editar</a>
+                    <a href="{% url 'facturacion:eliminar_cliente' cli.pk %}">elimina</a>
                 </td>
             </tr>
             {% empty %}

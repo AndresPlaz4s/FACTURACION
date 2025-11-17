@@ -108,3 +108,39 @@ def crear_cliente(request):
     else:
         form = ClienteForm()  
     return render(request, 'facturacion/crear_cliente.html', {"form": form})
+
+@login_required
+def editar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+
+    if request.method == "POST":
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect("facturacion:cliente")
+
+    else:
+        form = ClienteForm(instance=cliente)
+
+    return render(
+        request,
+        "facturacion/editar_cliente.html",
+        {
+            "form": form,
+            "cliente": cliente
+        }
+    )
+
+
+
+@login_required
+def eliminar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    if request.method == "POST":
+        cliente.delete()
+        return redirect("facturacion:cliente")
+    return render(
+        request,
+        "facturacion/eliminar_cliente.html",
+        {"cliente": cliente}
+    )

@@ -1,0 +1,26 @@
+{% extends 'facturacion/base.html' %}
+{% block title %}Editar producto{% endblock %}
+
+{% block content %}
+
+<div class="caja-formulario">
+    <h1>Editar cliente</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-campos">
+            {{ form.as_p }}
+        </div>
+
+        <div class="btn btn-left" style="margin-top: 20px;">
+            <button type="submit" class="btn-confirmar">Actualizar</button>
+        </div>
+    </form>
+
+    <div class="volver-inventario">
+        <a href="{% url 'facturacion:cliente' %}">← Volver al inventario</a>
+    </div>
+</div>
+
+{% endblock %}
