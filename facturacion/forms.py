@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Producto, Cliente
+from .models import Producto, Cliente, Usuario   
 
 
 "formulario para registrar productos"
@@ -55,3 +55,37 @@ class ClienteForm(forms.ModelForm):
                 })
     }
     
+
+class UsuarioForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, required=False, label='Contraseña')
+    password2 = forms.CharField(widget=forms.PasswordInput, required=False, label='Confirmar contraseña')
+    class Meta:
+        model = Usuario
+        fields = ["nombre", "email", "rol"]
+        widgets = {
+            "nombre": forms.TextInput(attrs={
+                "placeholder": "ingrese el nombre",
+            }),
+            "email": forms.EmailInput(attrs={
+                    "placeholder":"ingrese su email",
+                }),
+            
+            "rol": forms.Select()
+        }
+
+    def clean(self):
+        cleaned = super().clean()
+        p1 = cleaned.get('password')
+        p2 = cleaned.get('password2')
+        
+        if not getattr(self, 'instance', None) or not self.instance.pk:
+            if not p1:
+                raise forms.ValidationError('La contraseña es obligatoria para crear un usuario.')
+            if not p2:
+                raise forms.ValidationError('Debe confirmar la contraseña.')
+        
+        if p1 or p2:
+            if p1 != p2:
+                raise forms.ValidationError('Las contraseñas no coinciden.')
+        return cleaned
+

@@ -1,0 +1,15 @@
+{% extends 'facturacion/base.html' %}
+{% block title %}Eliminar usuario{% endblock %}
+
+{% block content %}
+
+<h1>Eliminar usuario</h1>
+<p>¿Estás seguro de que quieres eliminar <strong>{{ usuario.nombre }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="eliminar">Si, eliminar</button>
+    <a href="{% url 'facturacion:usuarios' %}">Cancelar</a>
+</form>
+
+{% endblock %}

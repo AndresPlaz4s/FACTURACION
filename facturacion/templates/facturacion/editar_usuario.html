@@ -1,0 +1,26 @@
+{% extends 'facturacion/base.html' %}
+{% block title %}Editar usuario{% endblock %}
+
+{% block content %}
+
+<div class="caja-formularioos">
+    <h1>Editar usuario</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="camposS">
+            {{ form.as_p }}
+        </div>
+
+        <div class="btn-left" style="margin-top: 20px;">
+            <button type="submit" class="confirmarr">Actualizar</button>
+        </div>
+    </form>
+
+    <div class="volver">
+        <a href="{% url 'facturacion:usuarios' %}">← Volver a usuarios</a>
+    </div>
+</div>
+
+{% endblock %}

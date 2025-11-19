@@ -7,15 +7,21 @@
 </head>
 <body>
     <p>inicio de seccion requerido</p>
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
         <label for="usuario">
-            <input type="text" name="username" id="usuario" placeholder="Usuario">
+            <input type="text" name="username" id="usuario" placeholder="Usuario" required>
         </label>
         <label for="pass">
-            <input type="password" name="password" placeholder="Contraseña">
+            <input type="password" name="password" placeholder="Contraseña" required>
         </label>
-        <button type="submit">Iniciar seccion</button>
+        <button type="submit">Iniciar sesión</button>
     </form>
 </body>
 </html>

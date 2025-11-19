@@ -1,14 +1,5 @@
 from django.db import models
 
-""""class Usuario(models.Model):
-    nombre = models.CharField(max_length=100)
-    correo = models.EmailField(unique=True)
-    Contraseña  = models.CharField(max_length= 20, blank= False, null= False)
-    Tipo_Usuario = models.CharField(max_length= 20, blank= False, null= False)
-    def __str__(self):
-        return f"{self.nombre} <{self.correo}>"""""
-from django.db import models
-
 class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
     email = models.EmailField(max_length=200, blank=True, null=True)
@@ -22,19 +13,32 @@ class Cliente(models.Model):
         return f"{self.nombre} ({self.n_documento})"
 
 class Usuario(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, blank=True, null=True)
     email = models.EmailField(max_length=200, blank=True, null=True)
-    n_documento = models.CharField(max_length=10, blank=True, null=True)
-    rol = models.CharField(max_length=20, blank=True, null=True)
     
+    ROL_CHOICES = [
+        ("administrador", "Administrador"),
+        ("vendedor", "Vendedor"),
+    ]
+    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default="vendedor")
+    
+    from django.conf import settings
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='perfil_usuario'
+    )
+
     class Meta:
         db_table = 'usuario'
-    
+
     def __str__(self):
         return f"{self.nombre} - {self.rol or 'sin rol'}"
 
 class Administrador(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50 )
     email = models.EmailField(max_length=200, blank=True, null=True)
     contrasena = models.CharField(max_length=128, help_text='Almacenar hashed/backed value, no texto plano')
     n_documento = models.CharField(max_length=10, blank=True, null=True)
