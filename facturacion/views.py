@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 
-from .models import Producto, Cliente, Usuario
+from .models import Producto, Cliente, Usuario, Venta
 
 from .forms import ProductoForm, ClienteForm, UsuarioForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib import messages
+from django.http import JsonResponse
+import json
 
 @login_required
 def home(request):
@@ -260,3 +262,58 @@ def eliminar_cliente(request, pk):
         "facturacion/eliminar_cliente.html",
         {"cliente": cliente}
     )
+    
+@login_required
+def ventas(request):
+    clientes = Cliente.objects.all()
+    productos = Producto.objects.all()
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.POST.get("data"))
+
+            cliente_id = data.get("cliente")
+            productos_json = data.get("productos", [])
+
+            if not cliente_id:
+                messages.error(request, "Debe seleccionar un cliente.")
+                return redirect("facturacion:ventas")
+
+            if len(productos_json) == 0:
+                messages.error(request, "Debe agregar productos a la venta.")
+                return redirect("facturacion:ventas")
+
+            cliente = Cliente.objects.get(id=cliente_id)
+
+            for item in productos_json:
+
+                prod = Producto.objects.get(id=item["id"])
+                cantidad = int(item["cantidad"])
+
+                if cantidad > prod.stock:
+                    messages.error(request, f"Stock insuficiente para {prod.nombre}")
+                    return redirect("facturacion:ventas")
+
+                Venta.objects.create(
+                    producto=prod,
+                    cliente=cliente,
+                    cantidad=cantidad,
+                    p_unitario=prod.precio,
+                    total=prod.precio * cantidad
+                )
+
+                # descontar stock
+                prod.stock -= cantidad
+                prod.save()
+
+            messages.success(request, "Venta registrada correctamente.")
+            return redirect("facturacion:ventas")
+
+        except Exception as e:
+            messages.error(request, f"Error en la venta: {str(e)}")
+            return redirect("facturacion:ventas")
+
+    return render(request, "facturacion/ventas.html", {
+        "clientes": clientes,
+        "productos": productos,
+    })

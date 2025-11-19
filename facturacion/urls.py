@@ -29,6 +29,7 @@ urlpatterns = [
     path('usuario/crear_usuario/', views.crear_usuario, name='crear_usuario'),
     path('usuario/<int:pk>/editar_usuario/', views.editar_usuario, name='editar_usuario'),
     path('usuario/<int:pk>/eliminar_usuario/', views.eliminar_usuario, name='eliminar_usuario'),
+    path('ventas/', views.ventas, name='ventas'),
 ]
 
 
