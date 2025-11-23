@@ -146,3 +146,7 @@ function buscarProducto() {
 
     document.getElementById("dataVenta").value = JSON.stringify({ cliente, productos: productosSeleccionados });
   });
+
+
+
+  
