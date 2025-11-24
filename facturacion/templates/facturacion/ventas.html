@@ -4,43 +4,43 @@
 {% block title %}Nueva Venta{% endblock %}
 
 {% block content %}
-
-<div class="caja-global">
-
-    <h1 style="text-align:center;">Nueva Venta</h1>
+<div class="caja-ventas">
+    <h1 style="text-align:center;">Ventas</h1>
 
     <!-- CLIENTE -->
-    <div style="margin-top: 15px;">
+    <div>
         <label>Cliente:</label>
         <select id="cliente">
             <option value="">--------</option>
             {% for c in clientes %}
-                <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
+            <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
             {% endfor %}
         </select>
     </div>
 
-    <!-- BUSCADOR PRODUCTOS -->
-    <div class="buscador" style="margin-top: 15px;">
+    <!-- BUSCADOR -->
+    <div style="margin-top: 15px;" class="buscador">
         <label>Agregar productos:</label>
-        <input type="text" id="buscarProducto" placeholder="Buscar producto..." />
-        <button id="btnBuscar">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        <input type="text" id="buscarProducto" placeholder="Buscar producto...">
+        <button type="button" onclick="buscarProducto()"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
 
-    <!-- SELECT ORIGINAL -->
-    <select id="selectProducto" class="select-producto">
-        <option value="">Seleccione un producto</option>
+    <!-- 🔎 Resultados -->
+    <div class="lista-resultados">
+        <h3>Resultados de la búsqueda:</h3>
+        <ul id="lista-resultados">
+        </ul>
+    </div>
+
+    <!-- SELECT ORIGINAL (oculto) -->
+    <select id="selectProducto" style="display: none;">
         {% for p in productos %}
-            <option value="{{ p.id }}" data-precio="{{ p.precio }}">
-                {{ p.nombre }}
-            </option>
+        <option value="{{ p.id }}" data-precio="{{ p.precio }}" data-stock="{{ p.stock }}">{{ p.nombre }}</option>
         {% endfor %}
     </select>
 
     <!-- TABLA -->
-    <table id="tablaNotas" style="margin-top:25px;">
+    <table border="1" style="width:100%; margin-top:20px;">
         <thead>
             <tr>
                 <th>Producto</th>
@@ -53,157 +53,16 @@
         <tbody id="grupoinputs"></tbody>
     </table>
 
-    <h3 style="margin-top:15px; font-size:20px;">Total Venta: $ 
-        <span id="totalVenta">0.00</span>
-    </h3>
+    <h3 style="margin-top:10px;">Total Venta: $ <span id="totalVenta">0.00</span></h3>
 
-    <form id="formVenta" method="POST">
+
+    <form id="formVenta" method="POST" class="btn">
         {% csrf_token %}
         <input type="hidden" name="data" id="dataVenta">
-        
-        <div class="btn">
-            <button type="reset" class="btn-limpiar">Limpiar</button>
-            <button type="submit" class="btn-confirmar">Guardar Venta</button>
-        </div>
+        <button type="submit" class="btn-confirmar">Confirmar</button>
+        <button type="button" class="btn-limpiar" onclick="eliminarTodos()">Limpiar</button>
     </form>
-
 </div>
-
-<script>
-
-let productosSeleccionados = [];
-let listaOriginal = [];
-
-window.onload = function() {
-    // Cargar productos REALES desde el select (limpiando texto)
-    const opts = document.querySelectorAll("#selectProducto option");
-
-    opts.forEach(op => {
-        if (op.value !== "") {
-            listaOriginal.push({
-                id: op.value.trim(),
-                nombre: op.textContent.trim().toLowerCase(), // <-- Normalizado
-                nombreMostrar: op.textContent.trim(),        // <-- Texto bonito
-                precio: parseFloat(op.dataset.precio)
-            });
-        }
-    });
-};
-
-/* =============================
-   BUSCADOR FUNCIONAL REAL
-============================= */
-document.getElementById("buscarProducto").addEventListener("keyup", function () {
-
-    const texto = this.value.toLowerCase();
-    const select = document.getElementById("selectProducto");
-
-    // Reiniciar select
-    select.innerHTML = `<option value="">Seleccione un producto</option>`;
-
-    // Filtro correcto SIN que se vacíe si no hay nada
-    let filtrados = listaOriginal.filter(p =>
-        p.nombre.includes(texto)
-    );
-
-    // Si no coincide ningún producto → mostrar todos
-    if (filtrados.length === 0) filtrados = listaOriginal;
-
-    // Reconstruir select
-    filtrados.forEach(p => {
-        const op = document.createElement("option");
-        op.value = p.id;
-        op.dataset.precio = p.precio;
-        op.textContent = p.nombreMostrar;
-        select.appendChild(op);
-    });
-});
-
-/* =============================
-   SELECCIONAR PRODUCTO
-============================= */
-document.getElementById("selectProducto").addEventListener("change", function () {
-    let id = this.value;
-    if (id === "") return;
-
-    let producto = listaOriginal.find(p => p.id === id);
-    if (!producto) return;
-
-    productosSeleccionados.push({
-        id: producto.id,
-        nombre: producto.nombreMostrar,
-        cantidad: 1,
-        precio: producto.precio
-    });
-
-    actualizarTabla();
-    this.value = "";
-    document.getElementById("buscarProducto").value = "";
-});
-
-/* =============================
-   TABLA
-============================= */
-function actualizarTabla() {
-    const tbody = document.getElementById("grupoinputs");
-    tbody.innerHTML = "";
-
-    let totalVenta = 0;
-
-    productosSeleccionados.forEach((p, i) => {
-        let subtotal = p.cantidad * p.precio;
-        totalVenta += subtotal;
-
-        tbody.innerHTML += `
-            <tr>
-                <td>${p.nombre}</td>
-                <td><input type="number" min="1" value="${p.cantidad}" onchange="cambiar(${i}, this.value)"></td>
-                <td>$${p.precio.toFixed(2)}</td>
-                <td>$${subtotal.toFixed(2)}</td>
-                <td><button onclick="eliminar(${i})">X</button></td>
-            </tr>
-        `;
-    });
-
-    document.getElementById("totalVenta").textContent = totalVenta.toFixed(2);
-}
-
-function cambiar(i, value) {
-    productosSeleccionados[i].cantidad = parseInt(value);
-    actualizarTabla();
-}
-
-function eliminar(i) {
-    productosSeleccionados.splice(i, 1);
-    actualizarTabla();
-}
-
-/* =============================
-   ENVIAR
-============================= */
-document.getElementById("formVenta").addEventListener("submit", function (e) {
-
-    if (productosSeleccionados.length === 0) {
-        alert("Debe agregar productos");
-        e.preventDefault();
-        return;
-    }
-
-    const cliente = document.getElementById("cliente").value;
-    if (!cliente) {
-        alert("Debe seleccionar un cliente");
-        e.preventDefault();
-        return;
-    }
-
-    document.getElementById("dataVenta").value = JSON.stringify({
-        cliente,
-        productos: productosSeleccionados
-    });
-});
-
-</script>
-
-
+<script src="{% static 'js/ventas.js' %}"></script>
 
 {% endblock %}
