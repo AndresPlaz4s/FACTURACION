@@ -232,7 +232,7 @@ button {
 }
 
 /* ===== CAJA VENTAS ===== */
-.caja-ventas {
+.caja-global {
     background: rgba(171, 73, 204, 0.08);
     backdrop-filter: blur(8px);
     border-radius: 20px;
@@ -242,7 +242,7 @@ button {
     margin: 50px auto;
     transition: 0.4s ease;
 }
-.caja-ventas h3 {
+.caja-global h3 {
     margin-left: 11px !important; 
 }
 
@@ -533,3 +533,11 @@ button {
     opacity: 1;
 }
 
+textarea {
+    resize: none;
+}
+.descripcion-textarea {
+    display: block;
+    resize: none;
+    width: 100%; 
+}

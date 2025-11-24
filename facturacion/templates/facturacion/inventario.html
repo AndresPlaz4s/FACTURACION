@@ -5,14 +5,13 @@
 
 {% block content %}
 
-<div class="caja-ventas">
+<div class="caja-global">
     <h1>Inventario de Productos</h1>
 
     <div class="btn btn-left" style="margin-bottom: 20px;">
         <a href="{% url 'facturacion:crear_producto' %}" class="btn-confirmar">Nuevo</a>
     </div>
 
-    {% if producto %}
     <table class="tabla-inventario" id="tablaNotas">
         <thead>
             <tr>
@@ -39,15 +38,14 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">No hay productos en el inventario</td>
+                <td colspan="5">
+                    No hay productos en el inventario
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    {% else %}
-    <p>No hay productos en esta tabla.</p>
-    {% endif %}
 </div>
 
 {% endblock %}

@@ -5,57 +5,69 @@
 
 {% block content %}
 
-<h1>Nueva Venta</h1>
+<div class="caja-global">
 
-<!-- CLIENTE -->
-<div>
-    <label>Cliente:</label>
-    <select id="cliente">
-        <option value="">--------</option>
-        {% for c in clientes %}
-            <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
+    <h1 style="text-align:center;">Nueva Venta</h1>
+
+    <!-- CLIENTE -->
+    <div style="margin-top: 15px;">
+        <label>Cliente:</label>
+        <select id="cliente">
+            <option value="">--------</option>
+            {% for c in clientes %}
+                <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- BUSCADOR PRODUCTOS -->
+    <div class="buscador" style="margin-top: 15px;">
+        <label>Agregar productos:</label>
+        <input type="text" id="buscarProducto" placeholder="Buscar producto..." />
+        <button id="btnBuscar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+
+    <!-- SELECT ORIGINAL -->
+    <select id="selectProducto" class="select-producto">
+        <option value="">Seleccione un producto</option>
+        {% for p in productos %}
+            <option value="{{ p.id }}" data-precio="{{ p.precio }}">
+                {{ p.nombre }}
+            </option>
         {% endfor %}
     </select>
+
+    <!-- TABLA -->
+    <table id="tablaNotas" style="margin-top:25px;">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>P. Unitario</th>
+                <th>Total</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody id="grupoinputs"></tbody>
+    </table>
+
+    <h3 style="margin-top:15px; font-size:20px;">Total Venta: $ 
+        <span id="totalVenta">0.00</span>
+    </h3>
+
+    <form id="formVenta" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="data" id="dataVenta">
+        
+        <div class="btn">
+            <button type="reset" class="btn-limpiar">Limpiar</button>
+            <button type="submit" class="btn-confirmar">Guardar Venta</button>
+        </div>
+    </form>
+
 </div>
-
-<!-- BUSCADOR -->
-<div style="margin-top: 15px;">
-    <label>Agregar productos:</label>
-    <input type="text" id="buscarProducto" placeholder="Buscar producto..." style="width:300px;">
-</div>
-
-<!-- SELECT ORIGINAL -->
-<select id="selectProducto" style="width: 100%; margin-top: 10px;">
-    <option value="">Seleccione un producto</option>
-    {% for p in productos %}
-        <option value="{{ p.id }}" data-precio="{{ p.precio }}">
-            {{ p.nombre }}
-        </option>
-    {% endfor %}
-</select>
-
-<!-- TABLA -->
-<table border="1" style="width:100%; margin-top:20px;">
-    <thead>
-        <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>P. Unitario</th>
-            <th>Total</th>
-            <th>Eliminar</th>
-        </tr>
-    </thead>
-    <tbody id="grupoinputs"></tbody>
-</table>
-
-<h3 style="margin-top:10px;">Total Venta: $ <span id="totalVenta">0.00</span></h3>
-
-<form id="formVenta" method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="data" id="dataVenta">
-    <button type="submit">Guardar Venta</button>
-</form>
-
 
 <script>
 

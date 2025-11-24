@@ -4,12 +4,17 @@
 
 {% block content %}
 
+<div class="caja-formulario">
 <h1>Crear cliente</h1>
 <form method="post">
     {% csrf_token %}
 
     {{ form.as_p }}
     <button type="submit"> Guardar </button>
+    <div class="volver-inventario">
+        <a href="{% url 'facturacion:cliente' %}">← Volver al inventario</a>
+    </div>
 </form>
+</div>
 
 {% endblock %}
