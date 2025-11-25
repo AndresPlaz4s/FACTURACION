@@ -14,13 +14,15 @@
     <form method="post" class="form-eliminar">
         {% csrf_token %}
 
+        <a href="{% url 'facturacion:cliente' %}" class="btn-cancelar-eliminar">
+            Cancelar
+        </a>
+
         <button type="submit" class="btn-confirmar-eliminar">
             Sí, eliminar
         </button>
 
-        <a href="{% url 'facturacion:cliente' %}" class="btn-cancelar-eliminar">
-            Cancelar
-        </a>
+
     </form>
 </div>
 
