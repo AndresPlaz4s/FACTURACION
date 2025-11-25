@@ -232,7 +232,7 @@ button {
 }
 
 /* ===== CAJA VENTAS ===== */
-.caja-ventas {
+.caja-global {
     background: rgba(171, 73, 204, 0.08);
     backdrop-filter: blur(8px);
     border-radius: 20px;
@@ -242,7 +242,7 @@ button {
     margin: 50px auto;
     transition: 0.4s ease;
 }
-.caja-ventas h3 {
+.caja-global h3 {
     margin-left: 11px !important; 
 }
 
@@ -418,7 +418,7 @@ button {
 }
 
 /* Mantener estilo de tabla como la vista de ventas */
-.tabla-inventario {
+.tablas{
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -427,17 +427,17 @@ button {
     margin-top: 20px;
 }
 
-.tabla-inventario th {
+.tablas {
     background: var(--secondary-color);
     color: #fff;
     padding: 12px;
 }
 
-.tabla-inventario td {
+.tablas td {
     padding: 12px;
 }
 
-.tabla-inventario tr:hover {
+.tablas tr:hover {
     background: rgba(171, 73, 204, 0.1);
 }
 .btn-left {
@@ -533,3 +533,123 @@ button {
     opacity: 1;
 }
 
+textarea {
+    resize: none;
+}
+.descripcion-textarea {
+    display: block;
+    resize: none;
+    width: 100%; 
+}
+
+td {
+    color: #000000;
+}
+
+.select-estilizado {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #b97ad9;
+    font-size: 1rem;
+    background: #fff;
+    color: #4a2568;
+    transition: .3s ease;
+    outline: none;
+}
+
+.select-estilizado:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 6px rgba(91, 46, 130, 0.4);
+}
+/* ===== CAJA ELIMINAR CLIENTE ===== */
+.caja-eliminar {
+    background: rgba(171, 73, 204, 0.08);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    margin: 60px auto;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(91, 46, 130, 0.25);
+}
+
+.caja-eliminar h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+/* Texto */
+.texto-eliminar {
+    font-size: 1.2rem;
+    color: #4a2568;
+    margin-bottom: 35px;
+    line-height: 1.5;
+}
+
+/* Formulario */
+.form-eliminar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Botón rojo eliminar */
+.btn-confirmar-eliminar {
+    background: #d9534f;
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    border: none;
+    transition: 0.3s ease;
+}
+
+.btn-confirmar-eliminar:hover {
+    background: #c9302c;
+    transform: translateY(-2px);
+}
+
+/* Botón cancelar */
+.btn-cancelar-eliminar {
+    background: var(--primary-color);
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.btn-cancelar-eliminar:hover {
+    background: var(--third-color);
+    transform: translateY(-2px);
+}
+
+.inicio-contenedor {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.inicio-logo {
+    width: 180px;        /* tamaño más pequeño */
+    height: auto;
+    display: block;
+    margin: 0 auto 20px; /* centrar y espacio abajo */
+    border-radius: 15px; /* opcional */
+}
+
+.inicio-titulo {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.inicio-texto {
+    text-align: justify;
+    column-count: 2;        /* convierte el texto en 2 columnas */
+    column-gap: 40px;       /* espacio entre columnas */
+    line-height: 1.6;       /* más legible */
+    font-size: 15px;
+}

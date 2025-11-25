@@ -4,64 +4,71 @@
 {% block title %}Nueva Venta{% endblock %}
 
 {% block content %}
-<div class="caja-ventas">
-  <h1 style="text-align:center;">Ventas</h1>
+<div class="caja-global">
+    <h1 style="text-align:center;">Ventas</h1>
 
-  <!-- CLIENTE -->
-  <div>
-    <label>Cliente:</label>
-    <select id="cliente">
-      <option value="">--------</option>
-      {% for c in clientes %}
-        <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
-      {% endfor %}
+    <!-- CLIENTE -->
+    <div>
+        <label>Cliente:</label>
+        <select id="cliente" class="select-estilizado" style="width: 100%; max-width: 400px;">
+            <option value="">--------</option>
+            {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+
+    <!-- BUSCADOR -->
+    <div style="margin-top: 15px;" class="buscador">
+        <input type="text" id="buscarProducto" placeholder="Buscar producto...">
+        <button type="button" onclick="buscarProducto()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <!-- 🔎 Resultados -->
+    <div class="lista-resultados">
+        <h3>Resultados de la búsqueda:</h3>
+        <ul id="lista-resultados">
+        </ul>
+    </div>
+    <br>
+
+    <!-- SELECT ORIGINAL (oculto) -->
+    <select id="selectProducto" style="display: none;">
+        {% for p in productos %}
+        <option value="{{ p.id }}" data-precio="{{ p.precio }}" data-stock="{{ p.stock }}">{{ p.nombre }}</option>
+        {% endfor %}
     </select>
-  </div>
 
-  <!-- BUSCADOR -->
-  <div style="margin-top: 15px;" class="buscador">
-    <label>Agregar productos:</label>
-    <input type="text" id="buscarProducto" placeholder="Buscar producto...">
-    <button type="button" onclick="buscarProducto()"><i class="fa-solid fa-magnifying-glass"></i></button>
-  </div>
+    <!-- TABLA -->
+    <table class="tablas" id="tablaNotas">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>P. Unitario</th>
+                <th>Total</th>
+                <th>Opcion</th>
+            </tr>
+        </thead>
+        <tbody id="grupoinputs">
+            <tr id="noProductosRow">
+                <td colspan="5" style="text-align:center;">
+                    No hay productos agregados
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-  <!-- 🔎 Resultados -->
-  <div class="lista-resultados">
-    <h3>Resultados de la búsqueda:</h3>
-    <ul id="lista-resultados">
-    </ul>
-  </div>
-
-  <!-- SELECT ORIGINAL (oculto) -->
-  <select id="selectProducto" style="display: none;">
-    {% for p in productos %}
-      <option value="{{ p.id }}" data-precio="{{ p.precio }}" data-stock="{{ p.stock }}">{{ p.nombre }}</option>
-    {% endfor %}
-  </select>
-
-  <!-- TABLA -->
-  <table border="1" style="width:100%; margin-top:20px;">
-    <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>P. Unitario</th>
-        <th>Total</th>
-        <th>Eliminar</th>
-      </tr>
-    </thead>
-    <tbody id="grupoinputs"></tbody>
-  </table>
-
-  <h3 style="margin-top:10px;">Total Venta: $ <span id="totalVenta">0.00</span></h3>
+    <h3 style="margin-top:10px;">Total Venta: $ <span id="totalVenta">0.00</span></h3>
 
 
-<form id="formVenta" method="POST" class="btn">
-    {% csrf_token %}
-    <input type="hidden" name="data" id="dataVenta">
-    <button type="submit" class="btn-confirmar">Confirmar</button>
-    <button type="button" class="btn-limpiar" onclick="eliminarTodos()">Limpiar</button>
-  </form>
+    <form id="formVenta" method="POST" class="btn">
+        {% csrf_token %}
+        <input type="hidden" name="data" id="dataVenta">
+        <button type="button" class="btn-limpiar" onclick="eliminarTodos()">Limpiar</button>
+        <button type="submit" class="btn-confirmar">Confirmar</button>
+    </form>
 </div>
 <script src="{% static 'js/ventas.js' %}"></script>
 
