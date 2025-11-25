@@ -87,12 +87,15 @@ class UsuarioForm(forms.ModelForm):
         widgets = {
             "nombre": forms.TextInput(attrs={
                 "placeholder": "ingrese el nombre",
+                'class': 'form-control',
             }),
             "email": forms.EmailInput(attrs={
                     "placeholder":"ingrese su email",
+                    'class': 'form-control',
                 }),
             
-            "rol": forms.Select()
+            "rol": forms.Select(),
+            'class': 'form-control',
         }
 
     def clean(self):

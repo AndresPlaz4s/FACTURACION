@@ -624,3 +624,32 @@ td {
     background: var(--third-color);
     transform: translateY(-2px);
 }
+
+.inicio-contenedor {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.inicio-logo {
+    width: 180px;        /* tamaño más pequeño */
+    height: auto;
+    display: block;
+    margin: 0 auto 20px; /* centrar y espacio abajo */
+    border-radius: 15px; /* opcional */
+}
+
+.inicio-titulo {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.inicio-texto {
+    text-align: justify;
+    column-count: 2;        /* convierte el texto en 2 columnas */
+    column-gap: 40px;       /* espacio entre columnas */
+    line-height: 1.6;       /* más legible */
+    font-size: 15px;
+}
