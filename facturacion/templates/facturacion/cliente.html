@@ -1,4 +1,5 @@
-{% extends 'facturacion/base.html' %} {% load static %}
+{% extends 'facturacion/base.html' %} 
+{% load static %}
 
 {% block title %}cliente{% endblock %}
 
@@ -9,13 +10,10 @@
     <div class="btn btn-left" style="margin-bottom: 20px;">
         <a href="{% url 'facturacion:crear_cliente' %}" class="btn-confirmar">Nuevo cliente</a>
     </div>
-
-
-    {% if cliente %}
-    <table class="tabla-inventario" id="tablaNotas">
+    <table class="tablas" id="tablaNotas">
         <thead>
             <tr>
-                <th>Nonbre</th>
+                <th>Nombre</th>
                 <th>Gmail</th>
                 <th>Numero de documento</th>
                 <th>opciones</th>
@@ -39,8 +37,5 @@
             {% endfor %}
         </tbody>
     </table>
-    {% else %}
-    <p style="margin: 10px">no hay clientes</p>
-    {% endif %}
 </div>
-{% endblock%}
+{% endblock %}

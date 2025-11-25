@@ -1,20 +1,24 @@
-
 {% extends 'facturacion/base.html' %}
 {% block title %}Crear cliente{% endblock %}
 
 {% block content %}
 
 <div class="caja-formulario">
-<h1>Crear cliente</h1>
-<form method="post">
-    {% csrf_token %}
+    <h1>Crear cliente</h1>
+    <form method="post">
+        {% csrf_token %}
 
-    {{ form.as_p }}
-    <button type="submit"> Guardar </button>
-    <div class="volver-inventario">
-        <a href="{% url 'facturacion:cliente' %}">← Volver al inventario</a>
-    </div>
-</form>
+        <div class="form-campos">
+            {{ form.as_p }}
+        </div>
+        <div class="btn btn-left" style="margin-top: 20px;">
+            <button type="submit" class="btn-confirmar"> Guardar </button>
+        </div>
+
+        <div class="volver-inventario">
+            <a href="{% url 'facturacion:cliente' %}">← Volver </a>
+        </div>
+    </form>
 </div>
 
 {% endblock %}
