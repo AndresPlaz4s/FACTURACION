@@ -6,40 +6,45 @@
 {% block content %}
 <div class="caja-ventas">
   <h1 style="text-align:center;">Ventas</h1>
-
+  
   <!-- CLIENTE -->
   <div>
     <label>Cliente:</label>
-    <select id="cliente">
-      <option value="">--------</option>
+    <select id="cliente" required>
+      <option value="">-- Seleccione un cliente --</option>
       {% for c in clientes %}
         <option value="{{ c.id }}">{{ c.nombre }} - {{ c.n_documento }}</option>
       {% endfor %}
     </select>
   </div>
-
+  
   <!-- BUSCADOR -->
   <div style="margin-top: 15px;" class="buscador">
     <label>Agregar productos:</label>
-    <input type="text" id="buscarProducto" placeholder="Buscar producto...">
-    <button type="button" onclick="buscarProducto()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <input type="text" id="buscarProducto" placeholder="Buscar producto..." autocomplete="off">
+    <button type="button" onclick="buscarProducto()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
   </div>
-
-  <!-- 🔎 Resultados -->
+  
+  <!-- Resultados de búsqueda -->
   <div class="lista-resultados">
     <h3>Resultados de la búsqueda:</h3>
-    <ul id="lista-resultados">
-    </ul>
+    <ul id="lista-resultados"></ul>
   </div>
-
+  
   <!-- SELECT ORIGINAL (oculto) -->
   <select id="selectProducto" style="display: none;">
     {% for p in productos %}
-      <option value="{{ p.id }}" data-precio="{{ p.precio }}" data-stock="{{ p.stock }}">{{ p.nombre }}</option>
+      <option value="{{ p.id }}" 
+              data-precio="{{ p.precio }}" 
+              data-stock="{{ p.stock }}">
+        {{ p.nombre }}
+      </option>
     {% endfor %}
   </select>
-
-  <!-- TABLA -->
+  
+  <!-- TABLA DE PRODUCTOS SELECCIONADOS -->
   <table border="1" style="width:100%; margin-top:20px;">
     <thead>
       <tr>
@@ -52,17 +57,36 @@
     </thead>
     <tbody id="grupoinputs"></tbody>
   </table>
-
-  <h3 style="margin-top:10px;">Total Venta: $ <span id="totalVenta">0.00</span></h3>
-
-
-<form id="formVenta" method="POST" class="btn">
+  
+  <!-- TOTAL -->
+  <h3 style="margin-top:10px;">
+    Total Venta: $ <span id="totalVenta">0.00</span>
+  </h3>
+  
+  <!-- FORMULARIO -->
+  <form id="formVenta" method="POST" class="btn">
     {% csrf_token %}
     <input type="hidden" name="data" id="dataVenta">
-    <button type="submit" class="btn-confirmar">Confirmar</button>
-    <button type="button" class="btn-limpiar" onclick="eliminarTodos()">Limpiar</button>
+    
+    <button type="submit" class="btn-confirmar">
+      <i class="fa-solid fa-check"></i> Confirmar Venta
+    </button>
+    
+    <button type="button" class="btn-limpiar" onclick="eliminarTodos()">
+      <i class="fa-solid fa-broom"></i> Limpiar
+    </button>
   </form>
+  
+  {% if messages %}
+    <div class="messages" style="margin-top: 20px;">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 </div>
-<script src="{% static 'js/ventas.js' %}"></script>
 
+<script src="{% static 'js/ventas.js' %}"></script>
 {% endblock %}

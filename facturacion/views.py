@@ -12,6 +12,9 @@ from django.contrib import messages
 from django.http import JsonResponse
 import json
 
+from django.template.loader import render_to_string
+from weasyprint import HTML
+
 @login_required
 def home(request):
     return render(request, 'facturacion/home.html')
@@ -267,53 +270,100 @@ def eliminar_cliente(request, pk):
 def ventas(request):
     clientes = Cliente.objects.all()
     productos = Producto.objects.all()
-
+    
     if request.method == "POST":
         try:
             data = json.loads(request.POST.get("data"))
-
             cliente_id = data.get("cliente")
             productos_json = data.get("productos", [])
-
+            
             if not cliente_id:
                 messages.error(request, "Debe seleccionar un cliente.")
                 return redirect("facturacion:ventas")
-
+            
             if len(productos_json) == 0:
                 messages.error(request, "Debe agregar productos a la venta.")
                 return redirect("facturacion:ventas")
-
+            
             cliente = Cliente.objects.get(id=cliente_id)
-
+            
+            # Validar stock antes de crear las ventas
             for item in productos_json:
-
                 prod = Producto.objects.get(id=item["id"])
                 cantidad = int(item["cantidad"])
-
                 if cantidad > prod.stock:
                     messages.error(request, f"Stock insuficiente para {prod.nombre}")
                     return redirect("facturacion:ventas")
-
-                Venta.objects.create(
+            
+            # Crear ventas individuales y guardar el ID de la primera
+            primera_venta_id = None
+            
+            for item in productos_json:
+                prod = Producto.objects.get(id=item["id"])
+                cantidad = int(item["cantidad"])
+                total = prod.precio * cantidad
+                
+                venta = Venta.objects.create(
                     producto=prod,
                     cliente=cliente,
                     cantidad=cantidad,
                     p_unitario=prod.precio,
-                    total=prod.precio * cantidad
+                    total=total
                 )
-
-                # descontar stock
+                
+                # Guardar el ID de la primera venta para el PDF
+                if primera_venta_id is None:
+                    primera_venta_id = venta.id
+                
+                # Descontar stock
                 prod.stock -= cantidad
                 prod.save()
-
+            
             messages.success(request, "Venta registrada correctamente.")
-            return redirect("facturacion:ventas")
-
+            # Redirigir al PDF de la primera venta
+            return redirect("facturacion:factura_pdf", pk=primera_venta_id)
+            
         except Exception as e:
             messages.error(request, f"Error en la venta: {str(e)}")
             return redirect("facturacion:ventas")
-
+    
     return render(request, "facturacion/ventas.html", {
         "clientes": clientes,
         "productos": productos,
     })
+# ==================== GENERACIÓN DE PDF ====================
+def generar_factura_pdf(request, pk):
+    """
+    Genera una factura en PDF para una venta específica.
+    """
+    venta = get_object_or_404(Venta, pk=pk)
+    
+    # Obtener todas las ventas del mismo cliente (asumiendo que son de la misma transacción)
+    # Si tu modelo Venta tiene un campo fecha, usa: fecha__date=venta.fecha.date()
+    # Como no lo tiene, obtenemos solo las ventas relacionadas por cliente
+    ventas_relacionadas = Venta.objects.filter(
+        cliente=venta.cliente,
+        id__gte=pk  # Ventas desde este ID en adelante (misma transacción)
+    ).select_related('producto')
+    
+    # Calcular total
+    total_general = sum(v.total for v in ventas_relacionadas)
+    
+    # Renderizar el template HTML
+    html_string = render_to_string('facturacion/transacciones/factura_pdf.html', {
+        'venta': venta,
+        'detalles': ventas_relacionadas,
+        'total_general': total_general,
+        'request': request,
+    })
+    
+    # Generar PDF con WeasyPrint
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    
+    # Crear respuesta HTTP
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename=factura_venta_{venta.id}.pdf'
+    response.write(result)
+    
+    return response

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura #{{ venta.id }}</title>
+</head>
+<body>
+    <h1>FACTURA DE VENTA</h1>
+    <p>Factura N° {{ venta.id|stringformat:"05d" }}</p>
+    <hr>
+
+    <h2>INFORMACIÓN DEL CLIENTE</h2>
+    <p><strong>Cliente:</strong> {{ venta.cliente.nombre }}</p>
+    <p><strong>Documento:</strong> {{ venta.cliente.n_documento }}</p>
+    <p><strong>Teléfono:</strong> {{ venta.cliente.telefono|default:"N/A" }}</p>
+    <p><strong>Email:</strong> {{ venta.cliente.email|default:"N/A" }}</p>
+    
+    <h2>INFORMACIÓN DE LA VENTA</h2>
+    <p><strong>Número de Venta:</strong> {{ venta.id }}</p>
+    <p><strong>Vendedor:</strong> {{ request.user.get_full_name|default:request.user.username }}</p>
+    <p><strong>Método de pago:</strong> Efectivo</p>
+    <hr>
+
+    <h2>DETALLE DE PRODUCTOS</h2>
+    <table border="1" cellpadding="5" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Cant.</th>
+                <th>Descripción</th>
+                <th>P. Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalles %}
+            <tr>
+                <td align="center">{{ detalle.cantidad }}</td>
+                <td>{{ detalle.producto.nombre }}</td>
+                <td align="right">${{ detalle.p_unitario|floatformat:2 }}</td>
+                <td align="right">${{ detalle.total|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>TOTAL: ${{ total_general|floatformat:2 }}</h2>
+    <hr>
+
+    <p>____________________________</p>
+    <p>Firma del Cliente</p>
+
+    <br><br>
+    <p align="center">Gracias por su compra</p>
+    <p align="center">Este documento es una representación impresa de una factura electrónica</p>
+</body>
+</html>

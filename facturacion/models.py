@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
@@ -108,4 +109,36 @@ class Venta(models.Model):
     
     def save(self, *args, **kwargs):
         self.total = self.p_unitario * self.cantidad
+        super().save(*args, **kwargs)
+
+class Factura(models.Model):
+
+    FORMAS_PAGO = [
+        ('EFECTIVO', 'Efectivo'),
+        ('TRANSFERENCIA', 'Transferencia'),
+    ]
+
+    ESTADOS = [
+        ('PAGADA', 'Pagada'),
+        ('ANULADA', 'Anulada'),
+    ]
+
+    codigo = models.CharField(max_length=20, unique=True, blank=True)
+
+    forma_pago = models.CharField(max_length=20, choices=FORMAS_PAGO)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='PAGADA')
+    fecha = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        db_table = 'factura'
+
+    def __str__(self):
+        return f"Factura {self.codigo} - {self.estado}"
+
+    def save(self, *args, **kwargs):
+        if not self.codigo:
+            ultimo = Factura.objects.order_by('-id').first()
+            numero = (ultimo.id + 1) if ultimo else 1
+            self.codigo = f"FAC-{numero}"
+
         super().save(*args, **kwargs)
