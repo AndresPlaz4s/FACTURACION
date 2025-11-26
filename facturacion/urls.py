@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 app_name = 'facturacion'
 
 urlpatterns = [
@@ -16,6 +17,8 @@ urlpatterns = [
     path('facturas/', views.facturas, name='facturas'),
 
     path('usuarios/', views.usuarios, name='usuarios'),
+    path('factura_pdf/<int:pk>/', views.generar_factura_pdf, name='factura_pdf'),
+
     
     #clientes
     path('cliente/', views.cliente, name='cliente'),
