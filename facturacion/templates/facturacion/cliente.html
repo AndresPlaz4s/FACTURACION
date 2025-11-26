@@ -1,19 +1,19 @@
-{% extends 'facturacion/base.html' %} {% load static %}
+{% extends 'facturacion/base.html' %} 
+{% load static %}
 
 {% block title %}cliente{% endblock %}
 
 {% block content %}
+<div class="caja-global">
+    <h1 class="title">Clientes</h1>
 
-<h1 class="title">Clientes</h1>
-
-
-<a href="{% url 'facturacion:crear_cliente' %}">Nuevo cliente</a>
-
-{% if cliente %}
-    <table class="table">
+    <div class="btn btn-left" style="margin-bottom: 20px;">
+        <a href="{% url 'facturacion:crear_cliente' %}" class="btn-confirmar">Nuevo cliente</a>
+    </div>
+    <table class="tablas" id="tablaNotas">
         <thead>
             <tr>
-                <th>Nonbre</th>
+                <th>Nombre</th>
                 <th>Gmail</th>
                 <th>Numero de documento</th>
                 <th>opciones</th>
@@ -25,9 +25,9 @@
                 <td>{{ cli.nombre }}</td>
                 <td>{{ cli.email }}</td>
                 <td>{{ cli.n_documento }}</td>
-                <td>
-                    <a href="{% url 'facturacion:editar_cliente' cli.pk %}">editar</a>
-                    <a href="{% url 'facturacion:eliminar_cliente' cli.pk %}">elimina</a>
+                <td class="opciones">
+                    <a href="{% url 'facturacion:editar_cliente' cli.pk %}" class="btn-editar">editar</a>
+                    <a href="{% url 'facturacion:eliminar_cliente' cli.pk %}" class="btn-eliminar">eliminar</a>
                 </td>
             </tr>
             {% empty %}
@@ -37,8 +37,5 @@
             {% endfor %}
         </tbody>
     </table>
-{% else %}
-    <p>no hay clientes</p>
-{% endif %}
-
-{% endblock%}
+</div>
+{% endblock %}

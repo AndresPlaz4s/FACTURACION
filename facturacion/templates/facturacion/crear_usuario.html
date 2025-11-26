@@ -3,12 +3,22 @@
 
 {% block content %}
 
-<h1>Crear usuario</h1>
-<form method="post">
-    {% csrf_token %}
+<div class="caja-formulario">
+    <h1>Crear usuario</h1>
 
-    {{ form.as_p }}
-    <button type="submit"> Guardar </button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-campos">
+            {{ form.as_p }}
+        </div>
+        <div class="btn btn-left" style="margin-top: 20px;">
+            <button type="submit" class="btn-confirmar">Guardar</button>
+        </div>
+        <div class="volver-inventario">
+            <a href="{% url 'facturacion:usuarios' %}">← Volver </a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

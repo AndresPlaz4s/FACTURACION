@@ -2,14 +2,27 @@
 {% block title %}Eliminar Producto{% endblock %}
 
 {% block content %}
+<div class="caja-eliminar">
+    <h1>Eliminar producto</h1>
 
-<h1>Eliminar producto</h1>
-<p>¿estas seguro de que quieres eliminar <strong>{{ producto.nombre }}</strong></p>
+    <p class="texto-eliminar">
+        ¿Estás seguro de que deseas eliminar <br>
+        <strong>{{ producto.nombre }}</strong>?
+    </p>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn eliminar">Si, eliminar</button>
-    <a href="{% url 'facturacion:inventario' %}">Cancelar</a>
-</form>
+    <form method="post" class="form-eliminar">
+        {% csrf_token %}
+
+        <a href="{% url 'facturacion:inventario' %}" class="btn-cancelar-eliminar">
+            Cancelar
+        </a>
+
+        <button type="submit" class="btn-confirmar-eliminar">
+            Sí, eliminar
+        </button>
+
+
+    </form>
+</div>
 
 {% endblock %}

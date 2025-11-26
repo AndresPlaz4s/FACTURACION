@@ -3,13 +3,27 @@
 
 {% block content %}
 
-<h1>Eliminar cliente</h1>
-<p>¿estas seguro de que quieres eliminar <strong>{{ cliente.nombre }}</strong></p>
+<div class="caja-eliminar">
+    <h1>Eliminar Cliente</h1>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn eliminar">Si, eliminar</button>
-    <a href="{% url 'facturacion:cliente' %}">Cancelar</a>
-</form>
+    <p class="texto-eliminar">
+        ¿Estás seguro de que deseas eliminar al cliente<br>
+        <strong>{{ cliente.nombre }}</strong>?
+    </p>
+
+    <form method="post" class="form-eliminar">
+        {% csrf_token %}
+
+        <a href="{% url 'facturacion:cliente' %}" class="btn-cancelar-eliminar">
+            Cancelar
+        </a>
+
+        <button type="submit" class="btn-confirmar-eliminar">
+            Sí, eliminar
+        </button>
+
+
+    </form>
+</div>
 
 {% endblock %}

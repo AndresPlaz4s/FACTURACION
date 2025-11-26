@@ -1,52 +1,51 @@
-{% extends 'facturacion/base.html' %} {% load static %}
+{% extends 'facturacion/base.html' %}
+{% load static %}
 
 {% block title %}Usuarios{% endblock %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farma Version.com</title>
-    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-   
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>Usuarios registrados</h2>
-        <a class="btn-confirmar" href="{% url 'facturacion:crear_usuario' %}">Agregar usuario</a>
+
+<div class="caja-global">
+    <h1>Usuarios registrados</h1>
+
+    <div class="btn btn-left" style="margin-bottom: 20px;">
+        <a href="{% url 'facturacion:crear_usuario' %}" class="btn-confirmar">Nuevo</a>
     </div>
 
-    <div class="lista-usuarios" style="margin-top:10px;">
-        <table class="tabla-usuarios" border="1" cellpadding="8" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for u in usuarios %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ u.nombre }}</td>
-                    <td>{{ u.email }}</td>
-                    <td>{{ u.rol }}</td>
-                    <td>
-                        <a href="{% url 'facturacion:editar_usuario' u.pk %}">Editar</a> |
-                        <a href="{% url 'facturacion:eliminar_usuario' u.pk %}">Eliminar</a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5">No hay usuarios registrados.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <table class="tablas" id="tablaNotas">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for u in usuarios %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ u.nombre }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.rol }}</td>
+
+                <td class="opciones">
+                    <a href="{% url 'facturacion:editar_usuario' u.pk %}" class="btn-editar">Editar</a>
+                    <a href="{% url 'facturacion:eliminar_usuario' u.pk %}" class="btn-eliminar">Eliminar</a>
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="5">
+                    No hay usuarios registrados.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
