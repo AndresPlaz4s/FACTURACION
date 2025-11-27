@@ -114,7 +114,6 @@ function actualizarTabla() {
       </tr>
     `;
   });
-}
 
   document.getElementById("totalVenta").textContent = totalVenta.toFixed(2);
 }
@@ -185,9 +184,6 @@ document.getElementById("formVenta").addEventListener("submit", function(e) {
   document.getElementById("dataVenta").value = JSON.stringify(data);
   
   // Enviar el formulario
+  // Enviar el formulario
   this.submit();
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> f99cc95
