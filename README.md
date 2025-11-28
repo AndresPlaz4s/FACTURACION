@@ -5,7 +5,7 @@
 
 
 
-###  🎯Objetivo general 
+##  🎯Objetivo general 
 <P>
 Este proyecto es un sistema de facturación desarrollado en Django para la Droguería “FARMAVISION ".
 Permite registrar productos, clientes, usuarios del sistema y generar facturas de venta de manera rápida.
@@ -129,7 +129,7 @@ proyecto_facturacion/
 - Nombre  
 - imail
 - n_documento
-- 
+- datos 
 - Teléfono  
 
 ### **Factura**
@@ -171,3 +171,4 @@ proyecto_facturacion/
 
 
 ---
+
