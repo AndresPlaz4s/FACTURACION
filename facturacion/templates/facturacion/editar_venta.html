@@ -1,0 +1,61 @@
+{% extends "facturacion/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Editar venta #{{ venta.id }}</h2>
+
+<!-- CLIENTE -->
+<label>Cliente:</label>
+<select id="cliente">
+  {% for c in clientes %}
+    <option value="{{ c.id }}" {% if c.id == venta.cliente.id %}selected{% endif %}>
+      {{ c.nombre }}
+    </option>
+  {% endfor %}
+</select>
+
+<br><br>
+
+<!-- TABLA DE PRODUCTOS -->
+<table border="1" width="100%">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Eliminar</th>
+    </tr>
+  </thead>
+  <tbody id="lista">
+    {% for d in detalles %}
+      <tr data-id="{{ d.producto.id }}">
+        <td>{{ d.producto.nombre }}</td>
+        <td><input type="number" class="cant" value="{{ d.cantidad }}" min="1"></td>
+        <td><button class="del">X</button></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+
+<!-- AGREGAR PRODUCTO -->
+<label>Agregar producto:</label>
+<select id="addProd">
+  <option value="">---</option>
+  {% for p in productos %}
+    <option value="{{ p.id }}">{{ p.nombre }} - ${{ p.precio }}</option>
+  {% endfor %}
+</select>
+<button id="btnAdd">Agregar</button>
+
+<br><br>
+
+<form method="POST" id="form">
+  {% csrf_token %}
+  <input type="hidden" name="data" id="data">
+  <button type="submit">Guardar cambios</button>
+</form>
+
+<script src="{% static '' %}"></script>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Producto, Cliente, Usuario   
-
+from .models import Producto, Cliente, Usuario, User
+from django.contrib.auth.forms import UserCreationForm
 
 "formulario para registrar productos"
 
@@ -10,7 +10,7 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = ["nombre", "precio", "stock", "tipo", "descripcion", "f_vencimiento" ]
         widgets = {
-            "nombre": forms.TextInput( attrs={
+            "nombre": forms.TextInput(attrs={
                 "placeholder": "nombre del Producto",
             }),
             "precio": forms.NumberInput(attrs={
@@ -22,20 +22,30 @@ class ProductoForm(forms.ModelForm):
                 "min": 0,
             }),
             "descripcion": forms.Textarea(attrs={
-            "rows": 4,
-            "placeholder": "descripcion breve del producto",
-            "class": "descripcion-textarea"
+                "rows": 4,
+                "placeholder": "descripcion breve del producto",
+                "class": "descripcion-textarea"
             }),
-            "f_vencimiento": forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'form-control'
-            })
+            "f_vencimiento": forms.DateInput(
+                format='%Y-%m-%d',         
+                attrs={
+                    'type': 'date',         
+                    'class': 'form-control'
+                }
+            )
         }
+
+    #bloque importante
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['f_vencimiento'].input_formats = ['%Y-%m-%d']
+        
     def clean_precio(self):
         precio = self.cleaned_data.get("precio")
         if precio is not None and precio <= 0:
             raise forms.ValidationError("El precio tiene que ser mayor a 0")
         return precio
+    
 
 "formulario para registrar cliente"
 
@@ -78,39 +88,49 @@ def clean_n_documento(self):
 
 
 
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
+        
+        
 class UsuarioForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, required=False, label='Contraseña')
-    password2 = forms.CharField(widget=forms.PasswordInput, required=False, label='Confirmar contraseña')
     class Meta:
         model = Usuario
-        fields = ["nombre", "email", "rol"]
+        fields = ["rol"]
         widgets = {
-            "nombre": forms.TextInput(attrs={
-                "placeholder": "ingrese el nombre",
-                'class': 'form-control',
-            }),
-            "email": forms.EmailInput(attrs={
-                    "placeholder":"ingrese su email",
-                    'class': 'form-control',
-                }),
-            
-            "rol": forms.Select(),
-            'class': 'form-control',
+            "rol": forms.Select(attrs={"class": "form-control"}),
+        }
+        
+class UserEditForm(forms.ModelForm):
+    password1 = forms.CharField(
+        label="Nueva contraseña",
+        widget=forms.PasswordInput,
+        required=False
+    )
+    password2 = forms.CharField(
+        label="Confirmar nueva contraseña",
+        widget=forms.PasswordInput,
+        required=False
+    )
+
+    class Meta:
+        model = User
+        fields = ["username", "email"]
+        labels = {
+            "username": "Nombre de usuario",
+            "email": "Correo electrónico"
         }
 
     def clean(self):
-        cleaned = super().clean()
-        p1 = cleaned.get('password')
-        p2 = cleaned.get('password2')
-        
-        if not getattr(self, 'instance', None) or not self.instance.pk:
-            if not p1:
-                raise forms.ValidationError('La contraseña es obligatoria para crear un usuario.')
-            if not p2:
-                raise forms.ValidationError('Debe confirmar la contraseña.')
-        
+        cleaned_data = super().clean()
+        p1 = cleaned_data.get("password1")
+        p2 = cleaned_data.get("password2")
+
         if p1 or p2:
             if p1 != p2:
-                raise forms.ValidationError('Las contraseñas no coinciden.')
-        return cleaned
+                raise forms.ValidationError("Las contraseñas no coinciden.")
 
+        return cleaned_data

@@ -123,15 +123,7 @@
     </div>
 
     <h2>Datos del Cliente</h2>
-    <p class="row"><strong>Nombre:</strong> {{ venta.cliente.nombre }}</p>
-    <p class="row"><strong>Documento:</strong> {{ venta.cliente.n_documento|default:"N/A" }}</p>
-    <p class="row"><strong>Email:</strong> {{ venta.cliente.email|default:"N/A" }}</p>
-
-    <h2>Detalles de la venta</h2>
-    <p class="row"><strong>Número de venta:</strong> {{ venta.id }}</p>
-    <p class="row"><strong>Vendedor:</strong>
-        {% if request.user.get_full_name %}
-            {{ request.user.get_full_name }}
+    <p class="row"><strong>Nomb
         {% else %}
             {{ request.user.username }}
         {% endif %}
@@ -152,7 +144,15 @@
             {% for detalle in detalles %}
             <tr>
                 <td align="center">{{ detalle.cantidad }}</td>
-                <td>{{ detalle.producto.nombre }}</td>
+                <td>{{ detre:</strong> {{ venta.cliente.nombre }}</p>
+    <p class="row"><strong>Documento:</strong> {{ venta.cliente.n_documento|default:"N/A" }}</p>
+    <p class="row"><strong>Email:</strong> {{ venta.cliente.email|default:"N/A" }}</p>
+
+    <h2>Detalles de la venta</h2>
+    <p class="row"><strong>Número de venta:</strong> {{ venta.id }}</p>
+    <p class="row"><strong>Vendedor:</strong>
+        {% if request.user.get_full_name %}
+            {{ request.user.get_full_name }}alle.producto.nombre }}</td>
                 <td class="num">${{ detalle.p_unitario|floatformat:2 }}</td>
                 <td class="num">${{ detalle.total|floatformat:2 }}</td>
             </tr>
