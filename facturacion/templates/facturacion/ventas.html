@@ -17,8 +17,18 @@
       {% endfor %}
     </select>
   </div>
+
   
-  <!-- BUSCADOR -->
+
+  <!-- MÉTODO DE PAGO -->
+  <div style="margin-top: 10px;">
+    <label>Método de pago:</label>
+    <select id="formaPago" required>
+      <option value="EFECTIVO">Efectivo</option>
+      <option value="TRANSFERENCIA">Transferencia</option>
+    </select>
+  </div>
+
   <div style="margin-top: 15px;" class="buscador">
     <label>Agregar productos:</label>
     <input type="text" id="buscarProducto" placeholder="Buscar producto..." autocomplete="off">
@@ -28,29 +38,41 @@
   </div>
   
   <!-- Resultados de búsqueda -->
-  <div class="lista-resultados">
+  <div class="lista-resultados" style="margin-top:10px;">
     <h3>Resultados de la búsqueda:</h3>
     <ul id="lista-resultados"></ul>
   </div>
   
-  <!-- SELECT ORIGINAL (oculto) -->
+ 
   <select id="selectProducto" style="display: none;">
     {% for p in productos %}
-      <option value="{{ p.id }}" 
-              data-precio="{{ p.precio }}" 
-              data-stock="{{ p.stock }}">
+      <option value="{{ p.id }}" data-precio="{{ p.precio }}" data-stock="{{ p.stock }}">
         {{ p.nombre }}
       </option>
     {% endfor %}
   </select>
+  
+
+  <div id="agregarArea" style="display:none; margin-top:10px;">
+    <label>Producto seleccionado: <span id="selNombre"></span></label>
+    <div>
+      <label>Cantidad:</label>
+      <input type="number" id="cantidad" min="1" value="1" style="width:80px;">
+      <label>P. Unitario:</label>
+      <input type="text" id="p_unitario" readonly style="width:100px;">
+      <label>Total:</label>
+      <input type="text" id="total" readonly style="width:120px;">
+      <button type="button" id="agregarProducto">Agregar</button>
+    </div>
+  </div>
   
   <!-- TABLA DE PRODUCTOS SELECCIONADOS -->
   <table border="1" style="width:100%; margin-top:20px;">
     <thead>
       <tr>
         <th>Producto</th>
-        <th>Cantidad</th>
         <th>P. Unitario</th>
+        <th>Cantidad</th>
         <th>Total</th>
         <th>Eliminar</th>
       </tr>
@@ -73,8 +95,7 @@
     </button>
     
     <button type="button" class="btn-limpiar" onclick="eliminarTodos()">
-      <i class="fa-solid fa-broom"></i> Limpiar
-    </button>
+      <i class="fa-solid fa-broom"></i> Limpiar</button>
   </form>
   
   {% if messages %}

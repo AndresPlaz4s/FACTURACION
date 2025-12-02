@@ -10,7 +10,8 @@
         {% csrf_token %}
 
         <div class="form-campos">
-            {{ form.as_p }}
+            {{ user_form.as_p }}
+            {{ perfil_form.as_p }}
         </div>
         <div class="btn btn-left" style="margin-top: 20px;">
             <button type="submit" class="btn-confirmar">Guardar</button>

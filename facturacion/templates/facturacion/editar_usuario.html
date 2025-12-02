@@ -9,18 +9,20 @@
     <form method="post">
         {% csrf_token %}
 
-        <div class="camposS">
-            {{ form.as_p }}
-        </div>
+    <form method="post">
+        {% csrf_token %}
 
-        <div class="btn-left" style="margin-top: 20px;">
-            <button type="submit" class="confirmarr">Actualizar</button>
+        <div class="form-campos">
+            {{ user_form.as_p }}
+            {{ perfil_form.as_p }}
+        </div>
+        <div class="btn btn-left" style="margin-top: 20px;">
+            <button type="submit" class="btn-confirmar">Guardar</button>
+        </div>
+        <div class="volver-inventario">
+            <a href="{% url 'facturacion:usuarios' %}">← Volver </a>
         </div>
     </form>
-
-    <div class="volver">
-        <a href="{% url 'facturacion:usuarios' %}">← Volver a usuarios</a>
-    </div>
-</div>
+</div>  
 
 {% endblock %}

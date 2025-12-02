@@ -1,5 +1,9 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.db.models import Sum
+from django.utils.dateparse import parse_date
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
@@ -14,29 +18,25 @@ class Cliente(models.Model):
         return f"{self.nombre} ({self.n_documento})"
 
 class Usuario(models.Model):
-    nombre = models.CharField(max_length=50, blank=True, null=True)
-    email = models.EmailField(max_length=200, blank=True, null=True)
-    
+
     ROL_CHOICES = [
         ("administrador", "Administrador"),
         ("vendedor", "Vendedor"),
     ]
-    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default="vendedor")
     
-    from django.conf import settings
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='perfil_usuario'
+        on_delete=models.CASCADE,
+        related_name='perfil'
     )
+    
+    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default="vendedor")
 
     class Meta:
         db_table = 'usuario'
 
     def __str__(self):
-        return f"{self.nombre} - {self.rol or 'sin rol'}"
+        return f"{self.user.username} - {self.rol}"
 
 class Administrador(models.Model):
     nombre = models.CharField(max_length=50 )
@@ -68,19 +68,19 @@ class Producto(models.Model):
         ("BL", "Bl"),
         ("UNIDAD", "Unidad"),
     ]
+
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
     descripcion = models.TextField(blank=True, null=True)
-    tipo = models.CharField(max_length=10, choices=TIPO_PRODUCTO, default="CREADO")
+    tipo = models.CharField(max_length=10, choices=TIPO_PRODUCTO)
     f_entrada = models.DateField(auto_now_add=True)
     f_vencimiento = models.DateField(blank=True, null=True)
-    
     class Meta:
         db_table = 'producto'
-    
+
     def __str__(self):
-        return f"{self.nombre} - {self.stock} unidades"
+        return f"{self.nombre}"
 
 class ProveedorProducto(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
@@ -95,21 +95,31 @@ class ProveedorProducto(models.Model):
         return f"{self.proveedor.n_empresa} -> {self.producto.nombre}: {self.c_productos}"
 
 class Venta(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    fecha = models.DateTimeField(default=timezone.now)
+    forma_pago = models.CharField(max_length=20, choices=[("EFECTIVO","Efectivo"),("TRANSFERENCIA","Transferencia")], default="EFECTIVO")
+
+    class Meta:
+        db_table = 'venta'
+
+    def __str__(self):
+        return f"Venta #{self.pk}"
+
+
+class DetalleVenta(models.Model):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name="detalles")
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
     cantidad = models.IntegerField()
     p_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    
+
     class Meta:
-        db_table = 'venta'
-    
+        db_table = "detalle_venta"
+
     def __str__(self):
-        return f"Venta #{self.pk or '-'}: {self.producto.nombre} x{self.cantidad} = {self.total}"
-    
-    def save(self, *args, **kwargs):
-        self.total = self.p_unitario * self.cantidad
-        super().save(*args, **kwargs)
+        return f"{self.producto.nombre} x {self.cantidad}"
+
 
 class Factura(models.Model):
 
@@ -123,11 +133,12 @@ class Factura(models.Model):
         ('ANULADA', 'Anulada'),
     ]
 
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name="facturas")
     codigo = models.CharField(max_length=20, unique=True, blank=True)
-
     forma_pago = models.CharField(max_length=20, choices=FORMAS_PAGO)
     estado = models.CharField(max_length=20, choices=ESTADOS, default='PAGADA')
     fecha = models.DateTimeField(default=timezone.now)
+    
 
     class Meta:
         db_table = 'factura'
@@ -142,3 +153,4 @@ class Factura(models.Model):
             self.codigo = f"FAC-{numero}"
 
         super().save(*args, **kwargs)
+

@@ -7,12 +7,12 @@ app_name = 'facturacion'
 urlpatterns = [
     path('home/', views.home, name='home'),
 
-    path('ventas/', views.ventas, name='ventas'),
 
     path('inventario/', views.inventario, name='inventario'),
     path('inventario/crear_producto/', views.crear_producto, name="crear_producto"),
     path('inventario/<int:pk>/editar_producto/', views.editar_producto, name="editar_producto"),
     path('inventario/<int:pk>/eliminar/', views.eliminar_producto, name='eliminar_producto'),
+    path('alerta-bajo-stock/', views.alerta_bajo_stock, name='alerta_bajo_stock'),
 
     path('facturas/', views.facturas, name='facturas'),
 
@@ -28,11 +28,14 @@ urlpatterns = [
 
 
     
-    path('usuario/', views.usuario_login, name='usuario_login'),
+    #path('usuario/', views.usuario_login, name='usuario_login'),
     path('usuario/crear_usuario/', views.crear_usuario, name='crear_usuario'),
     path('usuario/<int:pk>/editar_usuario/', views.editar_usuario, name='editar_usuario'),
     path('usuario/<int:pk>/eliminar_usuario/', views.eliminar_usuario, name='eliminar_usuario'),
     path('ventas/', views.ventas, name='ventas'),
+    path("ventas/editar/<int:pk>/", views.editar_venta, name="editar_venta"),
+
+    
 ]
 
 

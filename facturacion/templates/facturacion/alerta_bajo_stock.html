@@ -1,0 +1,72 @@
+{% extends 'facturacion/base.html' %}
+{% load static %}
+
+{% block title %}Alertas inventario{% endblock %}
+
+{% block content %}
+
+{% if bajo_stock %}
+
+<div class="caja-global">
+
+<h1>¡¡Alertas!!</h1>
+<div class="caja-eliminar">
+    <h1>Bajo stock</h1>
+    <p class="texto-eliminar">Algunos productos tienen menos de 10 unidades.</p>
+
+    {% for p in bajo_stock %}
+        <div>
+            <strong>{{ p.nombre }}</strong> — stock: {{ p.stock }}
+            <a href="{% url 'facturacion:eliminar_producto' p.id %}" class="btn-confirmar-eliminar">Eliminar</a>
+            |
+            <a href="{% url 'facturacion:editar_producto' p.id %}" class="btn-editar">Editar</a>
+        </div>
+        <br>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{% if p_vencidos %}
+<div class="caja-eliminar">
+    <h1>Productos vencidos</h1>
+    <p class="texto-eliminar">Algunos productos ya están vencidos.</p>
+
+    {% for p in p_vencidos %}
+        <div>
+            <strong>{{ p.nombre }}</strong> — venció el: {{ p.f_vencimiento }}
+            <a href="{% url 'facturacion:eliminar_producto' p.id %}" class="btn-confirmar-eliminar">Eliminar</a>
+            |
+            <a href="{% url 'facturacion:editar_producto' p.id %}" class="btn-editar">Editar</a>
+        </div>
+        <br>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+{% if pronto_vencer %}
+<div class="caja-eliminar">
+    <h1>Próximos a caducar</h1>
+    <p class="texto-eliminar">Algunos productos están próximos a caducar.</p>
+
+    {% for p in pronto_vencer %}
+        <div>
+            <strong>{{ p.nombre }}</strong> — vence el: {{ p.f_vencimiento }}
+            <a href="{% url 'facturacion:eliminar_producto' p.id %}" class="btn-confirmar-eliminar">Eliminar</a>
+            |
+            <a href="{% url 'facturacion:editar_producto' p.id %}" class="btn-editar">Editar</a>
+        </div>
+        <br>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="volver-inventario" style="display:flex; justify-content:center;">
+            <a href="{% url 'facturacion:inventario' %}?ok=1">← Volver </a>
+        </div>
+
+</div>
+
+
+
+{% endblock %}
