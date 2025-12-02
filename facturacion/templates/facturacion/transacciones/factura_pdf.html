@@ -1,34 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Factura #{{ venta.id }}</title>
 </head>
 <body>
-    <h1>FACTURA DE VENTA</h1>
-    <p>Factura N° {{ venta.id|stringformat:"05d" }}</p>
-    <hr>
 
-    <h2>INFORMACIÓN DEL CLIENTE</h2>
-    <p><strong>Cliente:</strong> {{ venta.cliente.nombre }}</p>
-    <p><strong>Documento:</strong> {{ venta.cliente.n_documento }}</p>
-    <p><strong>Teléfono:</strong> {{ venta.cliente.telefono|default:"N/A" }}</p>
-    <p><strong>Email:</strong> {{ venta.cliente.email|default:"N/A" }}</p>
-    
-    <h2>INFORMACIÓN DE LA VENTA</h2>
-    <p><strong>Número de Venta:</strong> {{ venta.id }}</p>
-    <p><strong>Vendedor:</strong> {{ request.user.get_full_name|default:request.user.username }}</p>
-    <p><strong>Método de pago:</strong> Efectivo</p>
-    <hr>
+    <div class="header">
+        <div class="">
+            <!-- Si tienes un logo, descomenta y coloca la ruta correcta -->
+            <!-- <img src="{% static 'img/logo.png' %}" alt="Logo" style="width:120px;"> -->
+        </div>
+        <div class="company-name">FARMAVISIÓN</div>
+    </div>
 
-    <h2>DETALLE DE PRODUCTOS</h2>
-    <table border="1" cellpadding="5" cellspacing="0" width="100%">
+    <div class="meta small">
+        <div>Factura N°: <strong>{{ venta.id|stringformat:"05d" }}</strong></div>
+        <div>
+            Fecha:
+            {% if venta.fecha %}
+                {{ venta.fecha|date:"d/m/Y H:i" }}
+            {% else %}
+                {{ venta.created_at|date:"d/m/Y H:i" | default:"-" }}
+            {% endif %}
+        </div>
+    </div>
+
+    <h2>Datos del Cliente</h2>
+    <p class="row"><strong>Nombre:</strong> {{ venta.cliente.nombre }}</p>
+    <p class="row"><strong>Documento:</strong> {{ venta.cliente.n_documento|default:"N/A" }}</p>
+    <p class="row"><strong>Email:</strong> {{ venta.cliente.email|default:"N/A" }}</p>
+
+    <h2>Detalles de la venta</h2>
+    <p class="row"><strong>Número de venta:</strong> {{ venta.id }}</p>
+    <p class="row"><strong>Vendedor:</strong>
+        {% if request.user.get_full_name %}
+            {{ request.user.get_full_name }}
+        {% else %}
+            {{ request.user.username }}
+        {% endif %}
+    </p>
+    <p class="row"><strong>Método de pago:</strong> {{ venta.metodo_pago|default:"Efectivo" }}</p>
+
+    <h2>Detalle de productos</h2>
+    <table>
         <thead>
             <tr>
-                <th>Cant.</th>
+                <th style="width:60px">Cant.</th>
                 <th>Descripción</th>
-                <th>P. Unitario</th>
-                <th>Subtotal</th>
+                <th style="width:110px">P. Unitario</th>
+                <th style="width:120px">Subtotal</th>
             </tr>
         </thead>
         <tbody>
@@ -36,21 +58,37 @@
             <tr>
                 <td align="center">{{ detalle.cantidad }}</td>
                 <td>{{ detalle.producto.nombre }}</td>
-                <td align="right">${{ detalle.p_unitario|floatformat:2 }}</td>
-                <td align="right">${{ detalle.total|floatformat:2 }}</td>
+                <td class="num">${{ detalle.p_unitario|floatformat:2 }}</td>
+                <td class="num">${{ detalle.total|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" align="center" class="small">No hay productos registrados</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <h2>TOTAL: ${{ total_general|floatformat:2 }}</h2>
-    <hr>
+    <div class="totals">
+        <table style="border: none;">
+            <tr style="border: none;">
+                <td style="border: none; width:75%;"></td>
+                <td style="border: none; width:25%;">
+                    <table style="border-collapse: collapse; width:100%;">
+                        <tr>
+                            <td class="label" style="border: none;">TOTAL:</td>
+                            <td class="num" style="border: none;">${{ total_general|floatformat:2 }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-    <p>____________________________</p>
-    <p>Firma del Cliente</p>
+    <div class="footer">
+        <p>Gracias por su compra</p>
+        <p>Este documento es una representación impresa de una factura electrónica</p>
+    </div>
 
-    <br><br>
-    <p align="center">Gracias por su compra</p>
-    <p align="center">Este documento es una representación impresa de una factura electrónica</p>
 </body>
 </html>
